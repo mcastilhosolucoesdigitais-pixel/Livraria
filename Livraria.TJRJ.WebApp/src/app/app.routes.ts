@@ -9,5 +9,13 @@ export const routes: Routes = [
   {
     path: 'livros',
     loadChildren: () => import('./features/livros/livros.routes').then(m => m.livrosRoutes)
+  },
+  {
+    path: 'autores',
+    loadChildren: () => import('./features/autores/autores.routes').then(m => m.autoresRoutes)
+  },
+  {
+    path: 'assuntos',
+    loadChildren: () => import('./features/assuntos/assuntos.routes').then(m => m.assuntosRoutes)
   }
 ];
