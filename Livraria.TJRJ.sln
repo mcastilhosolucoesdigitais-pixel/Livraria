@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35806.99 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livraria.TJRJ.API", "Livraria.TJRJ.API\Livraria.TJRJ.API.csproj", "{20F4F44D-E763-42D7-B056-B67E67ABBE0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livraria.TJRJ.Test.FuncionalTest", "Livraria.TJRJ.Test.IntegrationTests\Livraria.TJRJ.Test.FuncionalTest.csproj", "{523AD5C3-BB68-4787-8D9A-D2D793F4CE77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20F4F44D-E763-42D7-B056-B67E67ABBE0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20F4F44D-E763-42D7-B056-B67E67ABBE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20F4F44D-E763-42D7-B056-B67E67ABBE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20F4F44D-E763-42D7-B056-B67E67ABBE0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{523AD5C3-BB68-4787-8D9A-D2D793F4CE77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{523AD5C3-BB68-4787-8D9A-D2D793F4CE77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{523AD5C3-BB68-4787-8D9A-D2D793F4CE77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{523AD5C3-BB68-4787-8D9A-D2D793F4CE77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {179E9191-7784-401E-A0B4-5136A4C2D97D}
+	EndGlobalSection
+EndGlobal
