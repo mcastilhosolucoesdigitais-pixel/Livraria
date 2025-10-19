@@ -21,3 +21,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Torna a classe Program acessível para testes de integração
+public partial class Program { }
