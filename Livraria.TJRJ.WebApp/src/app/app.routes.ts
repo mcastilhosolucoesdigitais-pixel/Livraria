@@ -17,5 +17,9 @@ export const routes: Routes = [
   {
     path: 'assuntos',
     loadChildren: () => import('./features/assuntos/assuntos.routes').then(m => m.assuntosRoutes)
+  },
+  {
+    path: 'relatorios',
+    loadChildren: () => import('./features/relatorios/relatorios.routes').then(m => m.relatoriosRoutes)
   }
 ];

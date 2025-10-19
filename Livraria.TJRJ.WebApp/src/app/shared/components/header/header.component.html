@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">
+      <i class="bi bi-book-fill me-2"></i>
+      Livraria TJRJ
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="!isMenuCollapsed"
+      aria-controls="navbarNav"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse"
+      id="navbarNav"
+      [class.show]="!isMenuCollapsed">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/livros"
+            routerLinkActive="active"
+            (click)="isMenuCollapsed = true">
+            <i class="bi bi-book me-1"></i>
+            Livros
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/autores"
+            routerLinkActive="active"
+            (click)="isMenuCollapsed = true">
+            <i class="bi bi-person me-1"></i>
+            Autores
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/assuntos"
+            routerLinkActive="active"
+            (click)="isMenuCollapsed = true">
+            <i class="bi bi-tag me-1"></i>
+            Assuntos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/relatorios/livros-por-autor"
+            routerLinkActive="active"
+            (click)="isMenuCollapsed = true">
+            <i class="bi bi-file-earmark-text me-1"></i>
+            Relatório
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

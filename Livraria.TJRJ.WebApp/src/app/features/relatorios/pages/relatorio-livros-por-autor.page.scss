@@ -1,0 +1,74 @@
+.autor-section {
+  page-break-inside: avoid;
+}
+
+.card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+
+  .card-header {
+    border-radius: 8px 8px 0 0;
+    padding: 1rem 1.5rem;
+
+    h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+  }
+}
+
+.table {
+  font-size: 0.9rem;
+
+  th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+}
+
+h2 {
+  color: #333;
+  font-weight: 600;
+}
+
+// Estilos para impressão
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #dee2e6 !important;
+    page-break-inside: avoid;
+  }
+
+  .autor-section {
+    page-break-after: always;
+
+    &:last-child {
+      page-break-after: auto;
+    }
+  }
+
+  .table {
+    font-size: 0.8rem;
+  }
+
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

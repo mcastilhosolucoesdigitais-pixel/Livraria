@@ -1,0 +1,46 @@
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .navbar-brand {
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin: 0 0.25rem;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-collapse {
+    margin-top: 1rem;
+
+    .nav-link {
+      margin: 0.25rem 0;
+    }
+  }
+}
+
+// Estilos para impressão - ocultar o menu
+@media print {
+  .navbar {
+    display: none !important;
+  }
+}
