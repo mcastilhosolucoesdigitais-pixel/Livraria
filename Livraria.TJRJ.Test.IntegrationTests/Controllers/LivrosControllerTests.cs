@@ -1,5 +1,6 @@
 using System.Net;
 using Livraria.TJRJ.Test.FuncionalTest.Infrastructure;
+using static Livraria.TJRJ.Test.FuncionalTest.Infrastructure.TestDataSeeder.TestIds;
 
 namespace Livraria.TJRJ.Test.FuncionalTest.Controllers;
 
@@ -15,12 +16,13 @@ public class LivrosControllerTests : BaseIntegrationTest
         // Arrange
         var livro = new
         {
-            Titulo = "Clean Code",
-            ISBN = "978-0132350884",
-            DataPublicacao = new DateTime(2008, 8, 1),
-            AutoresIds = new[] { 0 },
-            AssuntosIds = new[] { 0 },
-            ValorInicial = 89.90m,
+            Titulo = "The Pragmatic Programmer",
+            Editora = "Addison-Wesley",
+            Edicao = 2,
+            AnoPublicacao = "2019",
+            AutoresIds = new[] { Autor1Id },
+            AssuntosIds = new[] { Assunto1Id },
+            ValorInicial = 99.90m,
             FormaDeCompraInicial = "Balcao"
         };
 
@@ -46,7 +48,7 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar200OK_QuandoLivroExistir()
     {
         // Arrange
-        var livroId = 0;
+        var livroId = Livro1Id; // Clean Code
 
         // Act
         var response = await Client.GetAsync($"/api/livros/{livroId}");
@@ -59,7 +61,7 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar404NotFound_QuandoLivroNaoExistir()
     {
         // Arrange
-        var livroId = 0;
+        var livroId = LivroInexistenteId;
 
         // Act
         var response = await Client.GetAsync($"/api/livros/{livroId}");
@@ -72,14 +74,15 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar204NoContent_QuandoLivroForAtualizadoComSucesso()
     {
         // Arrange
-        var livroId = 0;
+        var livroId = Livro1Id;
         var livroAtualizado = new
         {
             Titulo = "Clean Code - Updated",
-            ISBN = "978-0132350884",
-            DataPublicacao = new DateTime(2008, 8, 1),
-            AutoresIds = new[] { 0 },
-            AssuntosIds = new[] { 0 },     
+            Editora = "Prentice Hall",
+            Edicao = 2,
+            AnoPublicacao = "2008",
+            AutoresIds = new[] { Autor1Id },
+            AssuntosIds = new[] { Assunto1Id },
             ValorInicial = 99.90m,
             FormaDeCompraInicial = "Internet"
         };
@@ -95,12 +98,17 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar404NotFound_QuandoLivroNaoExistir()
     {
         // Arrange
-        var livroId = 0;
+        var livroId = LivroInexistenteId;
         var livroAtualizado = new
         {
             Titulo = "Clean Code",
-            ISBN = "978-0132350884",
-            DataPublicacao = new DateTime(2008, 8, 1)
+            Editora = "Prentice Hall",
+            Edicao = 1,
+            AnoPublicacao = "2008",
+            AutoresIds = new[] { Autor1Id },
+            AssuntosIds = new[] { Assunto1Id },
+            ValorInicial = 89.90m,
+            FormaDeCompraInicial = "Balcao"
         };
 
         // Act
@@ -114,7 +122,7 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar204NoContent_QuandoLivroForRemovidoComSucesso()
     {
         // Arrange
-        var livroId = 0;
+        var livroId = Livro3Id; // Domain-Driven Design
 
         // Act
         var response = await Client.DeleteAsync($"/api/livros/{livroId}");
@@ -127,7 +135,7 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar404NotFound_QuandoLivroNaoExistir()
     {
         // Arrange
-        var livroId = 0;
+        var livroId = LivroInexistenteId;
 
         // Act
         var response = await Client.DeleteAsync($"/api/livros/{livroId}");
@@ -142,9 +150,10 @@ public class LivrosControllerTests : BaseIntegrationTest
         // Arrange
         var livroInvalido = new
         {
-            Titulo = "",
-            ISBN = "",
-            DataPublicacao = DateTime.Now.AddYears(1) // Data futura
+            Titulo = "", // Título vazio - inválido
+            Editora = "",
+            Edicao = 0,
+            AnoPublicacao = "9999" // Ano futuro - inválido
         };
 
         // Act
