@@ -1,0 +1,38 @@
+import { IAssunto } from '../../assuntos/models/assunto.model';
+import { ILivroAutor } from './livro-autor.model';
+import { ILivroPreco } from './livro-preco.model';
+import { FormaDeCompra } from '../../../shared/models/forma-de-compra.enum';
+
+export interface ILivro {
+  codl: number;
+  titulo: string;
+  editora: string;
+  edicao: number;
+  anoPublicacao: string;
+  assuntos: IAssunto[];
+  autores: ILivroAutor[];
+  precos: ILivroPreco[];
+}
+
+export interface ILivroCreateDto {
+  titulo: string;
+  editora: string;
+  edicao: number;
+  anoPublicacao: string;
+  assuntos: number[];
+  autores: number[];
+  valor: number;
+  formaDeCompra: FormaDeCompra;
+}
+
+export interface ILivroUpdateDto {
+  codl: number;
+  titulo: string;
+  editora: string;
+  edicao: number;
+  anoPublicacao: string;
+  assuntos: number[];
+  autores: number[];
+  valor: number;
+  formaDeCompra: FormaDeCompra;
+}
