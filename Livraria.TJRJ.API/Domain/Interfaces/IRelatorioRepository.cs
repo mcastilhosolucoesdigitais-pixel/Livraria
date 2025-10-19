@@ -1,4 +1,4 @@
-using Livraria.TJRJ.API.Domain.DTOs;
+using Livraria.TJRJ.API.Application.DTOs;
 
 namespace Livraria.TJRJ.API.Domain.Interfaces;
 
