@@ -37,7 +37,7 @@ public class RelatoriosControllerTests : BaseIntegrationTest
     public async Task Get_DeveRetornar200OK_QuandoBuscarRelatorioComFiltroDeAutor()
     {
         // Arrange
-        var autorId = Guid.NewGuid();
+        var autorId = 0;
 
         // Act
         var response = await Client.GetAsync($"/api/relatorios/livros-por-autor?autorId={autorId}");

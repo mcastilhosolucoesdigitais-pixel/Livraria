@@ -5,5 +5,5 @@ namespace Livraria.TJRJ.API.Application.Features.Assuntos.Commands;
 
 public class DeletarAssuntoCommand : IRequest<Result>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }

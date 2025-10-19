@@ -6,5 +6,5 @@ namespace Livraria.TJRJ.API.Application.Features.Relatorios.Queries;
 
 public class ObterRelatorioLivrosPorAutorQuery : IRequest<Result<IEnumerable<RelatorioLivroAutorDto>>>
 {
-    public Guid? AutorId { get; set; }
+    public int? AutorId { get; set; }
 }

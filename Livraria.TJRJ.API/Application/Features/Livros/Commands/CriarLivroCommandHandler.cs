@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Livraria.TJRJ.API.Application.Features.Livros.Commands;
 
-public class CriarLivroCommandHandler : IRequestHandler<CriarLivroCommand, Result<Guid>>
+public class CriarLivroCommandHandler : IRequestHandler<CriarLivroCommand, Result<int>>
 {
     private readonly ILivroRepository _livroRepository;
     private readonly IAutorRepository _autorRepository;
@@ -22,7 +22,7 @@ public class CriarLivroCommandHandler : IRequestHandler<CriarLivroCommand, Resul
         _assuntoRepository = assuntoRepository;
     }
 
-    public async Task<Result<Guid>> Handle(CriarLivroCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CriarLivroCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -41,7 +41,7 @@ public class CriarLivroCommandHandler : IRequestHandler<CriarLivroCommand, Resul
                     var autor = await _autorRepository.GetByIdAsync(autorId, cancellationToken);
                     if (autor == null)
                     {
-                        return Result<Guid>.Failure($"Autor com ID {autorId} não encontrado.");
+                        return Result<int>.Failure($"Autor com ID {autorId} não encontrado.");
                     }
                     livro.AdicionarAutor(autor);
                 }
@@ -55,7 +55,7 @@ public class CriarLivroCommandHandler : IRequestHandler<CriarLivroCommand, Resul
                     var assunto = await _assuntoRepository.GetByIdAsync(assuntoId, cancellationToken);
                     if (assunto == null)
                     {
-                        return Result<Guid>.Failure($"Assunto com ID {assuntoId} não encontrado.");
+                        return Result<int>.Failure($"Assunto com ID {assuntoId} não encontrado.");
                     }
                     livro.AdicionarAssunto(assunto);
                 }
@@ -70,7 +70,7 @@ public class CriarLivroCommandHandler : IRequestHandler<CriarLivroCommand, Resul
                 }
                 else
                 {
-                    return Result<Guid>.Failure($"Forma de compra '{precoInput.FormaDeCompra}' é inválida.");
+                    return Result<int>.Failure($"Forma de compra '{precoInput.FormaDeCompra}' é inválida.");
                 }
             }
 
@@ -80,15 +80,15 @@ public class CriarLivroCommandHandler : IRequestHandler<CriarLivroCommand, Resul
             // Salva as alterações
             await _livroRepository.UnitOfWork.CommitAsync(cancellationToken);
 
-            return Result<Guid>.Success(livro.Id);
+            return Result<int>.Success(livro.Id);
         }
         catch (ArgumentException ex)
         {
-            return Result<Guid>.Failure(ex.Message);
+            return Result<int>.Failure(ex.Message);
         }
         catch (Exception ex)
         {
-            return Result<Guid>.Failure($"Erro ao criar livro: {ex.Message}");
+            return Result<int>.Failure($"Erro ao criar livro: {ex.Message}");
         }
     }
 }

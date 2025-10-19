@@ -16,7 +16,7 @@ public class AutorRepository : IAutorRepository
 
     public IUnitOfWork UnitOfWork => _context;
 
-    public async Task<Autor?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Autor?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Autores.FindAsync(new object[] { id }, cancellationToken);
     }
@@ -41,12 +41,12 @@ public class AutorRepository : IAutorRepository
         _context.Autores.Remove(entity);
     }
 
-    public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Autores.AnyAsync(a => a.Id == id, cancellationToken);
     }
 
-    public async Task<Autor?> GetByIdWithLivrosAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Autor?> GetByIdWithLivrosAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Autores
             .Include(a => a.Livros)
@@ -66,7 +66,7 @@ public class AutorRepository : IAutorRepository
             .AnyAsync(a => a.Nome == nome, cancellationToken);
     }
 
-    public async Task<bool> ExistsByNomeExcludingIdAsync(string nome, Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsByNomeExcludingIdAsync(string nome, int id, CancellationToken cancellationToken = default)
     {
         return await _context.Autores
             .AnyAsync(a => a.Nome == nome && a.Id != id, cancellationToken);

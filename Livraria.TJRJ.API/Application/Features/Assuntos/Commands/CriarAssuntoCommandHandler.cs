@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Livraria.TJRJ.API.Application.Features.Assuntos.Commands;
 
-public class CriarAssuntoCommandHandler : IRequestHandler<CriarAssuntoCommand, Result<Guid>>
+public class CriarAssuntoCommandHandler : IRequestHandler<CriarAssuntoCommand, Result<int>>
 {
     private readonly IAssuntoRepository _assuntoRepository;
 
@@ -14,7 +14,7 @@ public class CriarAssuntoCommandHandler : IRequestHandler<CriarAssuntoCommand, R
         _assuntoRepository = assuntoRepository;
     }
 
-    public async Task<Result<Guid>> Handle(CriarAssuntoCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CriarAssuntoCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -25,7 +25,7 @@ public class CriarAssuntoCommandHandler : IRequestHandler<CriarAssuntoCommand, R
 
             if (assuntoExistente)
             {
-                return Result<Guid>.Failure("Já existe um assunto com esta descrição.");
+                return Result<int>.Failure("Já existe um assunto com esta descrição.");
             }
 
             // Cria o novo assunto
@@ -37,15 +37,15 @@ public class CriarAssuntoCommandHandler : IRequestHandler<CriarAssuntoCommand, R
             // Salva as alterações
             await _assuntoRepository.UnitOfWork.CommitAsync(cancellationToken);
 
-            return Result<Guid>.Success(assunto.Id);
+            return Result<int>.Success(assunto.Id);
         }
         catch (ArgumentException ex)
         {
-            return Result<Guid>.Failure(ex.Message);
+            return Result<int>.Failure(ex.Message);
         }
         catch (Exception ex)
         {
-            return Result<Guid>.Failure($"Erro ao criar assunto: {ex.Message}");
+            return Result<int>.Failure($"Erro ao criar assunto: {ex.Message}");
         }
     }
 }

@@ -13,7 +13,8 @@ public class AssuntoConfiguration : IEntityTypeConfiguration<Assunto>
         builder.HasKey(a => a.Id);
 
         builder.Property(a => a.Id)
-            .ValueGeneratedNever();
+            .UseIdentityColumn()
+            .ValueGeneratedOnAdd();
 
         builder.Property(a => a.Descricao)
             .IsRequired()

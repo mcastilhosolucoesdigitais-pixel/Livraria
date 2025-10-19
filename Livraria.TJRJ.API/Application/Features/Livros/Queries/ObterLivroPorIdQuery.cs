@@ -6,5 +6,5 @@ namespace Livraria.TJRJ.API.Application.Features.Livros.Queries;
 
 public class ObterLivroPorIdQuery : IRequest<Result<LivroDto>>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }

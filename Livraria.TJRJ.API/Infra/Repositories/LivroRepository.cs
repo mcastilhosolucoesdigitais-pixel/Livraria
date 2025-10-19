@@ -16,7 +16,7 @@ public class LivroRepository : ILivroRepository
 
     public IUnitOfWork UnitOfWork => _context;
 
-    public async Task<Livro?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Livro?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Livros.FindAsync(new object[] { id }, cancellationToken);
     }
@@ -41,12 +41,12 @@ public class LivroRepository : ILivroRepository
         _context.Livros.Remove(entity);
     }
 
-    public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Livros.AnyAsync(l => l.Id == id, cancellationToken);
     }
 
-    public async Task<Livro?> GetByIdWithDetailsAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Livro?> GetByIdWithDetailsAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Livros
             .Include(l => l.Autores)
@@ -69,7 +69,7 @@ public class LivroRepository : ILivroRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Livro>> GetByAutorIdAsync(Guid autorId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Livro>> GetByAutorIdAsync(int autorId, CancellationToken cancellationToken = default)
     {
         return await _context.Livros
             .Include(l => l.Autores)
@@ -78,7 +78,7 @@ public class LivroRepository : ILivroRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Livro>> GetByAssuntoIdAsync(Guid assuntoId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Livro>> GetByAssuntoIdAsync(int assuntoId, CancellationToken cancellationToken = default)
     {
         return await _context.Livros
             .Include(l => l.Autores)
