@@ -40,7 +40,7 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar200OK_QuandoAutorExistir()
     {
         // Arrange
-        var autorId = Guid.NewGuid();
+        var autorId = 0;
 
         // Act
         var response = await Client.GetAsync($"/api/autores/{autorId}");
@@ -53,7 +53,7 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar404NotFound_QuandoAutorNaoExistir()
     {
         // Arrange
-        var autorId = Guid.NewGuid();
+        var autorId = 0;;
 
         // Act
         var response = await Client.GetAsync($"/api/autores/{autorId}");
@@ -66,7 +66,7 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar204NoContent_QuandoAutorForAtualizadoComSucesso()
     {
         // Arrange
-        var autorId = Guid.NewGuid();
+        var autorId = 0;
         var autorAtualizado = new
         {
             Nome = "Robert Cecil Martin"
@@ -83,7 +83,7 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar404NotFound_QuandoAutorNaoExistir()
     {
         // Arrange
-        var autorId = Guid.NewGuid();
+        var autorId = 0;
         var autorAtualizado = new
         {
             Nome = "Martin Fowler"
@@ -100,7 +100,7 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar204NoContent_QuandoAutorForRemovidoComSucesso()
     {
         // Arrange
-        var autorId = Guid.NewGuid();
+        var autorId = 0;
 
         // Act
         var response = await Client.DeleteAsync($"/api/autores/{autorId}");
@@ -113,7 +113,7 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar404NotFound_QuandoAutorNaoExistir()
     {
         // Arrange
-        var autorId = Guid.NewGuid();
+        var autorId = 0;
 
         // Act
         var response = await Client.DeleteAsync($"/api/autores/{autorId}");

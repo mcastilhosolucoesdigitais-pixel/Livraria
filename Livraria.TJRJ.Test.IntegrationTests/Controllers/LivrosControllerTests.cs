@@ -18,8 +18,8 @@ public class LivrosControllerTests : BaseIntegrationTest
             Titulo = "Clean Code",
             ISBN = "978-0132350884",
             DataPublicacao = new DateTime(2008, 8, 1),
-            AutoresIds = new[] { Guid.NewGuid() },
-            AssuntosIds = new[] { Guid.NewGuid() },
+            AutoresIds = new[] { 0 },
+            AssuntosIds = new[] { 0 },
             ValorInicial = 89.90m,
             FormaDeCompraInicial = "Balcao"
         };
@@ -46,7 +46,7 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar200OK_QuandoLivroExistir()
     {
         // Arrange
-        var livroId = Guid.NewGuid();
+        var livroId = 0;
 
         // Act
         var response = await Client.GetAsync($"/api/livros/{livroId}");
@@ -59,7 +59,7 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar404NotFound_QuandoLivroNaoExistir()
     {
         // Arrange
-        var livroId = Guid.NewGuid();
+        var livroId = 0;
 
         // Act
         var response = await Client.GetAsync($"/api/livros/{livroId}");
@@ -72,14 +72,14 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar204NoContent_QuandoLivroForAtualizadoComSucesso()
     {
         // Arrange
-        var livroId = Guid.NewGuid();
+        var livroId = 0;
         var livroAtualizado = new
         {
             Titulo = "Clean Code - Updated",
             ISBN = "978-0132350884",
             DataPublicacao = new DateTime(2008, 8, 1),
-            AutoresIds = new[] { Guid.NewGuid() },
-            AssuntosIds = new[] { Guid.NewGuid() },
+            AutoresIds = new[] { 0 },
+            AssuntosIds = new[] { 0 },     
             ValorInicial = 99.90m,
             FormaDeCompraInicial = "Internet"
         };
@@ -95,7 +95,7 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar404NotFound_QuandoLivroNaoExistir()
     {
         // Arrange
-        var livroId = Guid.NewGuid();
+        var livroId = 0;
         var livroAtualizado = new
         {
             Titulo = "Clean Code",
@@ -114,7 +114,7 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar204NoContent_QuandoLivroForRemovidoComSucesso()
     {
         // Arrange
-        var livroId = Guid.NewGuid();
+        var livroId = 0;
 
         // Act
         var response = await Client.DeleteAsync($"/api/livros/{livroId}");
@@ -127,7 +127,7 @@ public class LivrosControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar404NotFound_QuandoLivroNaoExistir()
     {
         // Arrange
-        var livroId = Guid.NewGuid();
+        var livroId = 0;
 
         // Act
         var response = await Client.DeleteAsync($"/api/livros/{livroId}");

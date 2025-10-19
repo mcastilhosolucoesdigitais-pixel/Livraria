@@ -5,5 +5,5 @@ namespace Livraria.TJRJ.API.Application.Features.Livros.Commands;
 
 public class DeletarLivroCommand : IRequest<Result>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }

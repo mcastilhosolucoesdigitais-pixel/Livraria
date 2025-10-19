@@ -2,9 +2,9 @@ namespace Livraria.TJRJ.API.Application.DTOs;
 
 public class RelatorioLivroAutorDto
 {
-    public Guid AutorId { get; set; }
+    public int AutorId { get; set; }
     public string AutorNome { get; set; } = string.Empty;
-    public Guid LivroId { get; set; }
+    public int LivroId { get; set; }
     public string LivroTitulo { get; set; } = string.Empty;
     public string LivroEditora { get; set; } = string.Empty;
     public int LivroEdicao { get; set; }

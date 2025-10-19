@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Livraria.TJRJ.API.Application.Features.Autores.Commands;
 
-public class CriarAutorCommandHandler : IRequestHandler<CriarAutorCommand, Result<Guid>>
+public class CriarAutorCommandHandler : IRequestHandler<CriarAutorCommand, Result<int>>
 {
     private readonly IAutorRepository _autorRepository;
 
@@ -14,7 +14,7 @@ public class CriarAutorCommandHandler : IRequestHandler<CriarAutorCommand, Resul
         _autorRepository = autorRepository;
     }
 
-    public async Task<Result<Guid>> Handle(CriarAutorCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CriarAutorCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -25,7 +25,7 @@ public class CriarAutorCommandHandler : IRequestHandler<CriarAutorCommand, Resul
 
             if (autorExistente)
             {
-                return Result<Guid>.Failure("Já existe um autor com este nome.");
+                return Result<int>.Failure("Já existe um autor com este nome.");
             }
 
             // Cria o novo autor
@@ -37,15 +37,15 @@ public class CriarAutorCommandHandler : IRequestHandler<CriarAutorCommand, Resul
             // Salva as alterações
             await _autorRepository.UnitOfWork.CommitAsync(cancellationToken);
 
-            return Result<Guid>.Success(autor.Id);
+            return Result<int>.Success(autor.Id);
         }
         catch (ArgumentException ex)
         {
-            return Result<Guid>.Failure(ex.Message);
+            return Result<int>.Failure(ex.Message);
         }
         catch (Exception ex)
         {
-            return Result<Guid>.Failure($"Erro ao criar autor: {ex.Message}");
+            return Result<int>.Failure($"Erro ao criar autor: {ex.Message}");
         }
     }
 }

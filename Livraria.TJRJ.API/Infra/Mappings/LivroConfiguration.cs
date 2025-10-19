@@ -14,17 +14,18 @@ public class LivroConfiguration : IEntityTypeConfiguration<Livro>
         builder.HasKey(l => l.Id);
 
         builder.Property(l => l.Id)
-            .ValueGeneratedNever();
+            .UseIdentityColumn()
+            .ValueGeneratedOnAdd();
 
         builder.Property(l => l.Titulo)
             .IsRequired()
             .HasMaxLength(40)
-            .HasColumnType("varchar(100)");
+            .HasColumnType("varchar(40)");
 
         builder.Property(l => l.Editora)
             .IsRequired()
             .HasMaxLength(40)
-            .HasColumnType("varchar(100)");
+            .HasColumnType("varchar(40)");
 
         builder.Property(l => l.Edicao)
             .IsRequired();

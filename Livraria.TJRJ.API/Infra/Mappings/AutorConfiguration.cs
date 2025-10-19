@@ -13,12 +13,13 @@ public class AutorConfiguration : IEntityTypeConfiguration<Autor>
         builder.HasKey(a => a.Id);
 
         builder.Property(a => a.Id)
-            .ValueGeneratedNever();
+            .UseIdentityColumn()
+            .ValueGeneratedOnAdd();
 
         builder.Property(a => a.Nome)
             .IsRequired()
             .HasMaxLength(40)
-            .HasColumnType("varchar(100)");
+            .HasColumnType("varchar(40)");
 
         // Relacionamento N:N com Livro
         builder.HasMany(a => a.Livros)

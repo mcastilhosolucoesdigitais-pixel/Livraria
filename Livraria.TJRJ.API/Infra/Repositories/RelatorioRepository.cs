@@ -16,7 +16,7 @@ public class RelatorioRepository : IRelatorioRepository
     }
 
     public async Task<IEnumerable<RelatorioLivroAutorDto>> GetRelatorioLivrosPorAutorAsync(
-        Guid? autorId = null,
+        int? autorId = null,
         CancellationToken cancellationToken = default)
     {
         var query = _context.Livros

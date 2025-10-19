@@ -2,11 +2,10 @@ namespace Livraria.TJRJ.API.Domain.Common;
 
 public abstract class Entity
 {
-    public Guid Id { get; protected set; }
+    public int Id { get; protected set; }
 
     protected Entity()
     {
-        Id = Guid.NewGuid();
     }
 
     public override bool Equals(object? obj)

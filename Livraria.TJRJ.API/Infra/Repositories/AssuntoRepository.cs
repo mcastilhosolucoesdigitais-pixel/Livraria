@@ -16,7 +16,7 @@ public class AssuntoRepository : IAssuntoRepository
 
     public IUnitOfWork UnitOfWork => _context;
 
-    public async Task<Assunto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Assunto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Assuntos.FindAsync(new object[] { id }, cancellationToken);
     }
@@ -41,12 +41,12 @@ public class AssuntoRepository : IAssuntoRepository
         _context.Assuntos.Remove(entity);
     }
 
-    public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Assuntos.AnyAsync(a => a.Id == id, cancellationToken);
     }
 
-    public async Task<Assunto?> GetByIdWithLivrosAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Assunto?> GetByIdWithLivrosAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Assuntos
             .Include(a => a.Livros)
@@ -66,7 +66,7 @@ public class AssuntoRepository : IAssuntoRepository
             .AnyAsync(a => a.Descricao == descricao, cancellationToken);
     }
 
-    public async Task<bool> ExistsByDescricaoExcludingIdAsync(string descricao, Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsByDescricaoExcludingIdAsync(string descricao, int id, CancellationToken cancellationToken = default)
     {
         return await _context.Assuntos
             .AnyAsync(a => a.Descricao == descricao && a.Id != id, cancellationToken);

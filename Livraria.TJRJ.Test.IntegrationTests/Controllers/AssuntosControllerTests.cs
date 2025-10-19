@@ -40,7 +40,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar200OK_QuandoAssuntoExistir()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = 0;
 
         // Act
         var response = await Client.GetAsync($"/api/assuntos/{assuntoId}");
@@ -53,7 +53,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar404NotFound_QuandoAssuntoNaoExistir()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = 0;
 
         // Act
         var response = await Client.GetAsync($"/api/assuntos/{assuntoId}");
@@ -66,7 +66,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar204NoContent_QuandoAssuntoForAtualizadoComSucesso()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = 0;
         var assuntoAtualizado = new
         {
             Descricao = "Engenharia de Software"
@@ -83,7 +83,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar404NotFound_QuandoAssuntoNaoExistir()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = 0;
         var assuntoAtualizado = new
         {
             Descricao = "Arquitetura de Software"
@@ -100,7 +100,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar204NoContent_QuandoAssuntoForRemovidoComSucesso()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = 0;
 
         // Act
         var response = await Client.DeleteAsync($"/api/assuntos/{assuntoId}");
@@ -113,7 +113,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar404NotFound_QuandoAssuntoNaoExistir()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = 0;
 
         // Act
         var response = await Client.DeleteAsync($"/api/assuntos/{assuntoId}");

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Livraria.TJRJ.API.Application.Features.Assuntos.Commands;
 
-public class CriarAssuntoCommand : IRequest<Result<Guid>>
+public class CriarAssuntoCommand : IRequest<Result<int>>
 {
     public string Descricao { get; set; } = string.Empty;
 }
