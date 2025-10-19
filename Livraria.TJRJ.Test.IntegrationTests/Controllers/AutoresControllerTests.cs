@@ -1,5 +1,7 @@
 using System.Net;
+using System.Net.Http.Json;
 using Livraria.TJRJ.Test.FuncionalTest.Infrastructure;
+using static Livraria.TJRJ.Test.FuncionalTest.Infrastructure.TestDataSeeder.TestIds;
 
 namespace Livraria.TJRJ.Test.FuncionalTest.Controllers;
 
@@ -15,7 +17,7 @@ public class AutoresControllerTests : BaseIntegrationTest
         // Arrange
         var autor = new
         {
-            Nome = "Robert C. Martin"
+            Nome = "Kent Beck"
         };
 
         // Act
@@ -40,7 +42,7 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar200OK_QuandoAutorExistir()
     {
         // Arrange
-        var autorId = 0;
+        var autorId = Autor1Id; // Robert C. Martin
 
         // Act
         var response = await Client.GetAsync($"/api/autores/{autorId}");
@@ -53,7 +55,7 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar404NotFound_QuandoAutorNaoExistir()
     {
         // Arrange
-        var autorId = 0;;
+        var autorId = AutorInexistenteId;
 
         // Act
         var response = await Client.GetAsync($"/api/autores/{autorId}");
@@ -66,10 +68,10 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar204NoContent_QuandoAutorForAtualizadoComSucesso()
     {
         // Arrange
-        var autorId = 0;
+        var autorId = Autor2Id; // Martin Fowler
         var autorAtualizado = new
         {
-            Nome = "Robert Cecil Martin"
+            Nome = "Martin Fowler Updated"
         };
 
         // Act
@@ -83,10 +85,10 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar404NotFound_QuandoAutorNaoExistir()
     {
         // Arrange
-        var autorId = 0;
+        var autorId = AutorInexistenteId;
         var autorAtualizado = new
         {
-            Nome = "Martin Fowler"
+            Nome = "Autor Inexistente"
         };
 
         // Act
@@ -100,10 +102,17 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar204NoContent_QuandoAutorForRemovidoComSucesso()
     {
         // Arrange
-        var autorId = 0;
+        var autor = new
+        {
+            Nome = "Ator Novo"
+        };
+
+        var responsePost = await Client.PostAsync("/api/autores", CreateJsonContent(autor));
+        Assert.Equal(HttpStatusCode.Created, responsePost.StatusCode);
+        var createdResult = await responsePost.Content.ReadFromJsonAsync<int>();
 
         // Act
-        var response = await Client.DeleteAsync($"/api/autores/{autorId}");
+        var response = await Client.DeleteAsync($"/api/autores/{createdResult}");
 
         // Assert
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
@@ -113,7 +122,7 @@ public class AutoresControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar404NotFound_QuandoAutorNaoExistir()
     {
         // Arrange
-        var autorId = 0;
+        var autorId = AutorInexistenteId;
 
         // Act
         var response = await Client.DeleteAsync($"/api/autores/{autorId}");
