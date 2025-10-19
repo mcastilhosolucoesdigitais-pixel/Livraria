@@ -1,37 +1,183 @@
+.container {
+  animation: fadeIn 0.4s ease-out;
+}
+
 .card {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  animation: slideUp 0.5s ease-out;
 
   .card-header {
-    border-radius: 8px 8px 0 0;
-    padding: 1.25rem;
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    padding: 1.5rem;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
 
     h3 {
       font-size: 1.5rem;
       font-weight: 600;
+      margin: 0;
     }
   }
 
   .card-body {
     padding: 2rem;
+    background-color: #fff;
   }
 }
 
+// Estilos para campos de formulário
 .form-label {
   font-weight: 600;
-  color: #495057;
+  color: #212529;
   margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-control,
+.form-select {
+  transition: all 0.2s ease;
+  border: 2px solid #e9ecef;
+  padding: 0.65rem 0.75rem;
+
+  &:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+    transform: translateY(-1px);
+  }
+
+  &.is-invalid {
+    border-color: #dc3545;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.15);
+    }
+  }
+}
+
+// Área de checkboxes customizada
+.border.rounded {
+  background-color: #f8f9fa;
+  border: 2px solid #e9ecef !important;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #dee2e6 !important;
+    background-color: #ffffff;
+  }
+
+  &:focus-within {
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 3px;
+
+    &:hover {
+      background: #999;
+    }
+  }
 }
 
 .form-check {
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+  margin: 0.25rem 0;
+  border-radius: 6px;
+  transition: all 0.15s ease;
 
   &:hover {
-    background-color: #f8f9fa;
-    padding-left: 0.5rem;
-    margin-left: -0.5rem;
-    border-radius: 4px;
+    background-color: rgba(13, 110, 253, 0.05);
+    padding-left: 1rem;
+  }
+}
+
+.form-check-input {
+  cursor: pointer;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.1rem;
+  transition: all 0.2s ease;
+
+  &:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    box-shadow: 0 2px 4px rgba(13, 110, 253, 0.3);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+  }
+}
+
+.form-check-label {
+  cursor: pointer;
+  user-select: none;
+  margin-left: 0.5rem;
+  font-size: 0.95rem;
+  color: #495057;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #212529;
+  }
+}
+
+// Mensagens de erro
+.invalid-feedback {
+  display: block;
+  font-size: 0.875rem;
+  color: #dc3545;
+  margin-top: 0.25rem;
+  animation: shake 0.3s ease;
+}
+
+.text-danger {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+  animation: shake 0.3s ease;
+}
+
+// Botões
+.btn {
+  padding: 0.65rem 1.5rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  border: none;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #0a58ca 0%, #084298 100%);
   }
 }
 
@@ -39,9 +185,65 @@
   gap: 0.5rem;
 }
 
-.border {
-  &:focus-within {
-    border-color: #0d6efd !important;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+// Texto muted
+.text-muted {
+  color: #6c757d !important;
+  font-style: italic;
+  padding: 1rem;
+  text-align: center;
+}
+
+// Animações
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .card-body {
+    padding: 1.25rem !important;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .d-flex.gap-2 {
+    flex-direction: column;
+
+    .btn {
+      margin: 0;
+    }
   }
 }
