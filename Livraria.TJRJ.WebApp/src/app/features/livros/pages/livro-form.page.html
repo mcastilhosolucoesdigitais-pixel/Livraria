@@ -1,0 +1,167 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">{{ isEditMode ? 'Editar Livro' : 'Novo Livro' }}</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="livroForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <!-- Título -->
+              <div class="col-md-8 mb-3">
+                <label for="titulo" class="form-label">Título *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="isFieldInvalid('titulo')"
+                  id="titulo"
+                  formControlName="titulo"
+                  maxlength="40"
+                  placeholder="Digite o título do livro">
+                <div class="invalid-feedback">{{ getFieldError('titulo') }}</div>
+              </div>
+
+              <!-- Edição -->
+              <div class="col-md-4 mb-3">
+                <label for="edicao" class="form-label">Edição *</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [class.is-invalid]="isFieldInvalid('edicao')"
+                  id="edicao"
+                  formControlName="edicao"
+                  min="1"
+                  placeholder="Ex: 1">
+                <div class="invalid-feedback">{{ getFieldError('edicao') }}</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Editora -->
+              <div class="col-md-8 mb-3">
+                <label for="editora" class="form-label">Editora *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="isFieldInvalid('editora')"
+                  id="editora"
+                  formControlName="editora"
+                  maxlength="40"
+                  placeholder="Digite o nome da editora">
+                <div class="invalid-feedback">{{ getFieldError('editora') }}</div>
+              </div>
+
+              <!-- Ano de Publicação -->
+              <div class="col-md-4 mb-3">
+                <label for="anoPublicacao" class="form-label">Ano de Publicação *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="isFieldInvalid('anoPublicacao')"
+                  id="anoPublicacao"
+                  formControlName="anoPublicacao"
+                  maxlength="4"
+                  placeholder="Ex: 2024">
+                <div class="invalid-feedback">{{ getFieldError('anoPublicacao') }}</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Autores -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Autores *</label>
+                <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                  <div *ngIf="autores.length === 0" class="text-muted">
+                    Nenhum autor cadastrado
+                  </div>
+                  <div *ngFor="let autor of autores" class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [id]="'autor-' + autor.codAu"
+                      [checked]="isAutorSelected(autor.codAu)"
+                      (change)="onAutorChange($event, autor.codAu)">
+                    <label class="form-check-label" [for]="'autor-' + autor.codAu">
+                      {{ autor.nome }}
+                    </label>
+                  </div>
+                </div>
+                <small class="text-danger" *ngIf="isFieldInvalid('autores')">
+                  {{ getFieldError('autores') }}
+                </small>
+              </div>
+
+              <!-- Assuntos -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Assuntos *</label>
+                <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                  <div *ngIf="assuntos.length === 0" class="text-muted">
+                    Nenhum assunto cadastrado
+                  </div>
+                  <div *ngFor="let assunto of assuntos" class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [id]="'assunto-' + assunto.codAs"
+                      [checked]="isAssuntoSelected(assunto.codAs)"
+                      (change)="onAssuntoChange($event, assunto.codAs)">
+                    <label class="form-check-label" [for]="'assunto-' + assunto.codAs">
+                      {{ assunto.descricao }}
+                    </label>
+                  </div>
+                </div>
+                <small class="text-danger" *ngIf="isFieldInvalid('assuntos')">
+                  {{ getFieldError('assuntos') }}
+                </small>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Valor -->
+              <div class="col-md-6 mb-3">
+                <label for="valor" class="form-label">Valor (R$) *</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [class.is-invalid]="isFieldInvalid('valor')"
+                  id="valor"
+                  formControlName="valor"
+                  step="0.01"
+                  min="0.01"
+                  placeholder="Ex: 49.90">
+                <div class="invalid-feedback">{{ getFieldError('valor') }}</div>
+              </div>
+
+              <!-- Forma de Compra -->
+              <div class="col-md-6 mb-3">
+                <label for="formaDeCompra" class="form-label">Forma de Compra *</label>
+                <select
+                  class="form-select"
+                  [class.is-invalid]="isFieldInvalid('formaDeCompra')"
+                  id="formaDeCompra"
+                  formControlName="formaDeCompra">
+                  <option *ngFor="let forma of formasDeCompra" [value]="forma.value">
+                    {{ forma.label }}
+                  </option>
+                </select>
+                <div class="invalid-feedback">{{ getFieldError('formaDeCompra') }}</div>
+              </div>
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex justify-content-end gap-2 mt-4">
+              <a routerLink="/livros" class="btn btn-secondary">
+                Cancelar
+              </a>
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

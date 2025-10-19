@@ -1,0 +1,47 @@
+.card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 8px;
+
+  .card-header {
+    border-radius: 8px 8px 0 0;
+    padding: 1.25rem;
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+}
+
+.form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.form-check {
+  padding: 0.5rem 0;
+
+  &:hover {
+    background-color: #f8f9fa;
+    padding-left: 0.5rem;
+    margin-left: -0.5rem;
+    border-radius: 4px;
+  }
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.border {
+  &:focus-within {
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+}
