@@ -1,5 +1,5 @@
 export interface IAssunto {
-  codAs: number;
+  id: number;
   descricao: string;
 }
 
@@ -8,6 +8,6 @@ export interface IAssuntoCreateDto {
 }
 
 export interface IAssuntoUpdateDto {
-  codAs: number;
+  id: number;
   descricao: string;
 }

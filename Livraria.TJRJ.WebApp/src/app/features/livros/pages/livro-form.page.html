@@ -79,10 +79,10 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      [id]="'autor-' + autor.codAu"
-                      [checked]="isAutorSelected(autor.codAu)"
-                      (change)="onAutorChange($event, autor.codAu)">
-                    <label class="form-check-label" [for]="'autor-' + autor.codAu">
+                      [id]="'autor-' + autor.id"
+                      [checked]="isAutorSelected(autor.id)"
+                      (change)="onAutorChange($event, autor.id)">
+                    <label class="form-check-label" [for]="'autor-' + autor.id">
                       {{ autor.nome }}
                     </label>
                   </div>
@@ -103,10 +103,10 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      [id]="'assunto-' + assunto.codAs"
-                      [checked]="isAssuntoSelected(assunto.codAs)"
-                      (change)="onAssuntoChange($event, assunto.codAs)">
-                    <label class="form-check-label" [for]="'assunto-' + assunto.codAs">
+                      [id]="'assunto-' + assunto.id"
+                      [checked]="isAssuntoSelected(assunto.id)"
+                      (change)="onAssuntoChange($event, assunto.id)">
+                    <label class="form-check-label" [for]="'assunto-' + assunto.id">
                       {{ assunto.descricao }}
                     </label>
                   </div>

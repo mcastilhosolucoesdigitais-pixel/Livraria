@@ -27,30 +27,34 @@
           <th>Ano</th>
           <th>Autores</th>
           <th>Assuntos</th>
-          <th>Preço</th>
+          <th>Preços</th>
           <th class="text-center">Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let livro of livros">
-          <td>{{ livro.codl }}</td>
+          <td>{{ livro.id }}</td>
           <td>{{ livro.titulo }}</td>
           <td>{{ livro.editora }}</td>
           <td>{{ livro.edicao }}</td>
           <td>{{ livro.anoPublicacao }}</td>
           <td>{{ getAutoresNomes(livro) }}</td>
           <td>{{ getAssuntosDescricoes(livro) }}</td>
-          <td>{{ getPrecoMinimo(livro) | currency:'BRL' }}</td>
+          <td>
+            <div *ngFor="let preco of livro.precos" class="small">
+              <strong>{{ preco.formaDeCompra }}:</strong> {{ preco.preco| currency:'BRL' }}
+            </div>
+          </td>
           <td class="text-center">
             <div class="btn-group" role="group">
               <a
-                [routerLink]="['/livros/editar', livro.codl]"
+                [routerLink]="['/livros/editar', livro.id]"
                 class="btn btn-sm btn-outline-primary"
                 title="Editar">
                 <i class="bi bi-pencil"></i>
               </a>
               <button
-                (click)="deleteLivro(livro.codl, livro.titulo)"
+                (click)="deleteLivro(livro.id, livro.titulo)"
                 class="btn btn-sm btn-outline-danger"
                 title="Excluir">
                 <i class="bi bi-trash"></i>

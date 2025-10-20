@@ -38,9 +38,9 @@ export class LivrosListPage implements OnInit {
     });
   }
 
-  deleteLivro(codl: number, titulo: string): void {
+  deleteLivro(id: number, titulo: string): void {
     if (confirm(`Tem certeza que deseja excluir o livro "${titulo}"?`)) {
-      this.livroService.deleteLivro(codl).subscribe({
+      this.livroService.deleteLivro(id).subscribe({
         next: () => {
           this.notificationService.showSuccess('Livro excluído com sucesso!');
           this.loadLivros();
@@ -51,7 +51,7 @@ export class LivrosListPage implements OnInit {
 
   getAutoresNomes(livro: ILivro): string {
     return livro.autores
-      .map(la => la.autor?.nome || '')
+      .map(la => la.nome || '')
       .filter(nome => nome)
       .join(', ');
   }

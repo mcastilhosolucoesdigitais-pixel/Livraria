@@ -27,18 +27,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let autor of autores">
-          <td>{{ autor.codAu }}</td>
+          <td>{{ autor.id }}</td>
           <td>{{ autor.nome }}</td>
           <td class="text-center">
             <div class="btn-group" role="group">
               <a
-                [routerLink]="['/autores/editar', autor.codAu]"
+                [routerLink]="['/autores/editar', autor.id]"
                 class="btn btn-sm btn-outline-primary"
                 title="Editar">
                 <i class="bi bi-pencil"></i>
               </a>
               <button
-                (click)="deleteAutor(autor.codAu, autor.nome)"
+                (click)="deleteAutor(autor.id, autor.nome)"
                 class="btn btn-sm btn-outline-danger"
                 title="Excluir">
                 <i class="bi bi-trash"></i>

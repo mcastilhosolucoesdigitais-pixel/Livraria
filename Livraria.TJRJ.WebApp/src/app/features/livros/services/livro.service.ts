@@ -16,19 +16,19 @@ export class LivroService {
     return this.http.get<ILivro[]>(this.apiUrl);
   }
 
-  getLivroById(codl: number): Observable<ILivro> {
-    return this.http.get<ILivro>(`${this.apiUrl}/${codl}`);
+  getLivroById(id: number): Observable<ILivro> {
+    return this.http.get<ILivro>(`${this.apiUrl}/${id}`);
   }
 
   createLivro(livro: ILivroCreateDto): Observable<ILivro> {
     return this.http.post<ILivro>(this.apiUrl, livro);
   }
 
-  updateLivro(codl: number, livro: ILivroUpdateDto): Observable<ILivro> {
-    return this.http.put<ILivro>(`${this.apiUrl}/${codl}`, livro);
+  updateLivro(id: number, livro: ILivroUpdateDto): Observable<ILivro> {
+    return this.http.put<ILivro>(`${this.apiUrl}/${id}`, livro);
   }
 
-  deleteLivro(codl: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${codl}`);
+  deleteLivro(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

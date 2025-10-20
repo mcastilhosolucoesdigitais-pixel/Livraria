@@ -42,7 +42,7 @@ public class AtualizarLivroCommandHandler : IRequestHandler<AtualizarLivroComman
 
             // Atualiza autores
             livro.LimparAutores();
-            foreach (var autorId in request.AutoresIds)
+            foreach (var autorId in request.Autores)
             {
                 var autor = await _autorRepository.GetByIdAsync(autorId, cancellationToken);
                 if (autor == null)
@@ -54,7 +54,7 @@ public class AtualizarLivroCommandHandler : IRequestHandler<AtualizarLivroComman
 
             // Atualiza assuntos
             livro.LimparAssuntos();
-            foreach (var assuntoId in request.AssuntosIds)
+            foreach (var assuntoId in request.Assuntos)
             {
                 var assunto = await _assuntoRepository.GetByIdAsync(assuntoId, cancellationToken);
                 if (assunto == null)

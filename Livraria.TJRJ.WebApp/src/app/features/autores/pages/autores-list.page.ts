@@ -38,9 +38,9 @@ export class AutoresListPage implements OnInit {
     });
   }
 
-  deleteAutor(codAu: number, nome: string): void {
+  deleteAutor(id: number, nome: string): void {
     if (confirm(`Tem certeza que deseja excluir o autor "${nome}"?`)) {
-      this.autorService.deleteAutor(codAu).subscribe({
+      this.autorService.deleteAutor(id).subscribe({
         next: () => {
           this.notificationService.showSuccess('Autor excluído com sucesso!');
           this.loadAutores();

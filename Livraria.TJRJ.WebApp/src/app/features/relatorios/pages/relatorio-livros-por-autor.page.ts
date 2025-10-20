@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RelatorioService } from '../services';
 import { IRelatorioLivrosPorAutor } from '../models';
+import { ILivroRelatorio } from '../models';
 
 @Component({
   selector: 'app-relatorio-livros-por-autor',
@@ -33,8 +34,8 @@ export class RelatorioLivrosPorAutorPage implements OnInit {
     });
   }
 
-  getTotalLivrosPorAutor(autor: IRelatorioLivrosPorAutor): number {
-    return autor.livros.length;
+  getTotalLivrosPorAutor(autorId: number, relatorio: ILivroRelatorio[]): number {
+    return relatorio.filter(item => item.autorId === autorId).length;
   }
 
   print(): void {

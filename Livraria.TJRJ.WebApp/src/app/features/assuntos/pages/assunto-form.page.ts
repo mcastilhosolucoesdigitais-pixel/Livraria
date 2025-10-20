@@ -70,7 +70,7 @@ export class AssuntoFormPage implements OnInit {
 
     if (this.isEditMode && this.assuntoId) {
       const updateDto: IAssuntoUpdateDto = {
-        codAs: this.assuntoId,
+        id: this.assuntoId,
         ...formValue
       };
 

@@ -4,7 +4,7 @@ import { ILivroPreco } from './livro-preco.model';
 import { FormaDeCompra } from '../../../shared/models/forma-de-compra.enum';
 
 export interface ILivro {
-  codl: number;
+  id: number;
   titulo: string;
   editora: string;
   edicao: number;
@@ -26,7 +26,7 @@ export interface ILivroCreateDto {
 }
 
 export interface ILivroUpdateDto {
-  codl: number;
+  id: number;
   titulo: string;
   editora: string;
   edicao: number;

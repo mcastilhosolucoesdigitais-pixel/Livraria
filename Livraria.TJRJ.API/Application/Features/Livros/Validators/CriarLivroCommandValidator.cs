@@ -23,10 +23,10 @@ public class CriarLivroCommandValidator : AbstractValidator<CriarLivroCommand>
             .Length(4).WithMessage("Ano de publicação deve ter 4 caracteres.")
             .Must(BeValidYear).WithMessage("Ano de publicação deve ser um ano válido.");
 
-        RuleFor(x => x.AutoresIds)
+        RuleFor(x => x.Autores)
             .NotEmpty().WithMessage("O livro deve ter pelo menos um autor.");
 
-        RuleFor(x => x.AssuntosIds)
+        RuleFor(x => x.Assuntos)
             .NotEmpty().WithMessage("O livro deve ter pelo menos um assunto.");
 
         RuleForEach(x => x.Precos).ChildRules(preco =>
