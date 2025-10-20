@@ -1,4 +1,5 @@
 using Livraria.TJRJ.API.Application.Common;
+using Livraria.TJRJ.API.Domain.Exceptions;
 using Livraria.TJRJ.API.Domain.Interfaces;
 using MediatR;
 
@@ -15,45 +16,34 @@ public class AtualizarAssuntoCommandHandler : IRequestHandler<AtualizarAssuntoCo
 
     public async Task<Result> Handle(AtualizarAssuntoCommand request, CancellationToken cancellationToken)
     {
-        try
+        // Busca o assunto existente
+        var assunto = await _assuntoRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (assunto == null)
         {
-            // Busca o assunto existente
-            var assunto = await _assuntoRepository.GetByIdAsync(request.Id, cancellationToken);
-
-            if (assunto == null)
-            {
-                return Result.Failure("Assunto não encontrado.");
-            }
-
-            // Verifica se já existe outro assunto com a mesma descrição
-            var assuntoExistente = await _assuntoRepository.ExistsByDescricaoExcludingIdAsync(
-                request.Descricao,
-                request.Id,
-                cancellationToken);
-
-            if (assuntoExistente)
-            {
-                return Result.Failure("Já existe outro assunto com esta descrição.");
-            }
-
-            // Atualiza a descrição
-            assunto.AtualizarDescricao(request.Descricao);
-
-            // Atualiza o repositório
-            _assuntoRepository.Update(assunto);
-
-            // Salva as alterações
-            await _assuntoRepository.UnitOfWork.CommitAsync(cancellationToken);
-
-            return Result.Success();
+            throw new AssuntoNaoEncontradoException(request.Id);
         }
-        catch (ArgumentException ex)
+
+        // Verifica se já existe outro assunto com a mesma descrição
+        var assuntoExistente = await _assuntoRepository.ExistsByDescricaoExcludingIdAsync(
+            request.Descricao,
+            request.Id,
+            cancellationToken);
+
+        if (assuntoExistente)
         {
-            return Result.Failure(ex.Message);
+            throw new ValidationException("Já existe outro assunto com esta descrição.");
         }
-        catch (Exception ex)
-        {
-            return Result.Failure($"Erro ao atualizar assunto: {ex.Message}");
-        }
+
+        // Atualiza a descrição
+        assunto.AtualizarDescricao(request.Descricao);
+
+        // Atualiza o repositório
+        _assuntoRepository.Update(assunto);
+
+        // Salva as alterações
+        await _assuntoRepository.UnitOfWork.CommitAsync(cancellationToken);
+
+        return Result.Success();
     }
 }

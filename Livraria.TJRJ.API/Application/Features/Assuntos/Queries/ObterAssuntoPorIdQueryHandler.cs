@@ -1,5 +1,6 @@
 using Livraria.TJRJ.API.Application.Common;
 using Livraria.TJRJ.API.Application.DTOs;
+using Livraria.TJRJ.API.Domain.Exceptions;
 using Livraria.TJRJ.API.Domain.Interfaces;
 using MediatR;
 
@@ -16,26 +17,19 @@ public class ObterAssuntoPorIdQueryHandler : IRequestHandler<ObterAssuntoPorIdQu
 
     public async Task<Result<AssuntoDto>> Handle(ObterAssuntoPorIdQuery request, CancellationToken cancellationToken)
     {
-        try
+        var assunto = await _assuntoRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (assunto == null)
         {
-            var assunto = await _assuntoRepository.GetByIdAsync(request.Id, cancellationToken);
-
-            if (assunto == null)
-            {
-                return Result<AssuntoDto>.Failure("Assunto não encontrado.");
-            }
-
-            var assuntoDto = new AssuntoDto
-            {
-                Id = assunto.Id,
-                Descricao = assunto.Descricao
-            };
-
-            return Result<AssuntoDto>.Success(assuntoDto);
+            throw new AssuntoNaoEncontradoException(request.Id);
         }
-        catch (Exception ex)
+
+        var assuntoDto = new AssuntoDto
         {
-            return Result<AssuntoDto>.Failure($"Erro ao buscar assunto: {ex.Message}");
-        }
+            Id = assunto.Id,
+            Descricao = assunto.Descricao
+        };
+
+        return Result<AssuntoDto>.Success(assuntoDto);
     }
 }

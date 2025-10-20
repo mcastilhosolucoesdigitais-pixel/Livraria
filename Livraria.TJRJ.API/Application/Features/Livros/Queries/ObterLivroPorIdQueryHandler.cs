@@ -1,5 +1,6 @@
 using Livraria.TJRJ.API.Application.Common;
 using Livraria.TJRJ.API.Application.DTOs;
+using Livraria.TJRJ.API.Domain.Exceptions;
 using Livraria.TJRJ.API.Domain.Interfaces;
 using MediatR;
 
@@ -16,44 +17,37 @@ public class ObterLivroPorIdQueryHandler : IRequestHandler<ObterLivroPorIdQuery,
 
     public async Task<Result<LivroDto>> Handle(ObterLivroPorIdQuery request, CancellationToken cancellationToken)
     {
-        try
+        var livro = await _livroRepository.GetByIdWithDetailsAsync(request.Id, cancellationToken);
+
+        if (livro == null)
         {
-            var livro = await _livroRepository.GetByIdWithDetailsAsync(request.Id, cancellationToken);
-
-            if (livro == null)
-            {
-                return Result<LivroDto>.Failure("Livro não encontrado.");
-            }
-
-            var livroDto = new LivroDto
-            {
-                Id = livro.Id,
-                Titulo = livro.Titulo,
-                Editora = livro.Editora,
-                Edicao = livro.Edicao,
-                AnoPublicacao = livro.AnoPublicacao,
-                Autores = livro.Autores.Select(a => new AutorDto
-                {
-                    Id = a.Id,
-                    Nome = a.Nome
-                }).ToList(),
-                Assuntos = livro.Assuntos.Select(a => new AssuntoDto
-                {
-                    Id = a.Id,
-                    Descricao = a.Descricao
-                }).ToList(),
-                Precos = livro.Precos.Select(p => new PrecoLivroDto
-                {
-                    Valor = p.Valor,
-                    FormaDeCompra = p.FormaDeCompra.ToString()
-                }).ToList()
-            };
-
-            return Result<LivroDto>.Success(livroDto);
+            throw new LivroNaoEncontradoException(int.Parse(request.Id.ToString()));
         }
-        catch (Exception ex)
+
+        var livroDto = new LivroDto
         {
-            return Result<LivroDto>.Failure($"Erro ao buscar livro: {ex.Message}");
-        }
+            Id = livro.Id,
+            Titulo = livro.Titulo,
+            Editora = livro.Editora,
+            Edicao = livro.Edicao,
+            AnoPublicacao = livro.AnoPublicacao,
+            Autores = livro.Autores.Select(a => new AutorDto
+            {
+                Id = a.Id,
+                Nome = a.Nome
+            }).ToList(),
+            Assuntos = livro.Assuntos.Select(a => new AssuntoDto
+            {
+                Id = a.Id,
+                Descricao = a.Descricao
+            }).ToList(),
+            Precos = livro.Precos.Select(p => new PrecoLivroDto
+            {
+                Valor = p.Valor,
+                FormaDeCompra = p.FormaDeCompra.ToString()
+            }).ToList()
+        };
+
+        return Result<LivroDto>.Success(livroDto);
     }
 }

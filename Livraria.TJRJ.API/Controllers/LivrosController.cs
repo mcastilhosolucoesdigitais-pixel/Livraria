@@ -26,12 +26,6 @@ public class LivrosController : ControllerBase
     public async Task<IActionResult> Post([FromBody] CriarLivroCommand command)
     {
         var result = await _mediator.Send(command);
-
-        if (!result.IsSuccess)
-        {
-            return BadRequest(new { errors = result.Errors.Any() ? result.Errors : new List<string> { result.Error ?? "Erro ao criar livro" } });
-        }
-
         return Created($"/api/livros/{result.Value}", result.Value);
     }
 
@@ -44,12 +38,6 @@ public class LivrosController : ControllerBase
     {
         var query = new ObterTodosLivrosQuery();
         var result = await _mediator.Send(query);
-
-        if (!result.IsSuccess)
-        {
-            return BadRequest(new { errors = result.Errors.Any() ? result.Errors : new List<string> { result.Error ?? "Erro ao obter livros" } });
-        }
-
         return Ok(result.Value);
     }
 
@@ -63,12 +51,6 @@ public class LivrosController : ControllerBase
     {
         var query = new ObterLivroPorIdQuery { Id = id };
         var result = await _mediator.Send(query);
-
-        if (!result.IsSuccess)
-        {
-            return NotFound(new { error = result.Error ?? "Livro não encontrado" });
-        }
-
         return Ok(result.Value);
     }
 
@@ -82,18 +64,7 @@ public class LivrosController : ControllerBase
     public async Task<IActionResult> Put(int id, [FromBody] AtualizarLivroCommand command)
     {
         command.Id = id;
-        var result = await _mediator.Send(command);
-
-        if (!result.IsSuccess)
-        {
-            if (result.Error?.Contains("não encontrado") == true || result.Error?.Contains("não existe") == true)
-            {
-                return NotFound(new { error = result.Error });
-            }
-
-            return BadRequest(new { errors = result.Errors.Any() ? result.Errors : new List<string> { result.Error ?? "Erro ao atualizar livro" } });
-        }
-
+        await _mediator.Send(command);
         return NoContent();
     }
 
@@ -106,13 +77,7 @@ public class LivrosController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         var command = new DeletarLivroCommand { Id = id };
-        var result = await _mediator.Send(command);
-
-        if (!result.IsSuccess)
-        {
-            return NotFound(new { error = result.Error ?? "Livro não encontrado" });
-        }
-
+        await _mediator.Send(command);
         return NoContent();
     }
 }
