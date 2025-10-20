@@ -10,7 +10,7 @@ public class AtualizarLivroCommand : IRequest<Result>
     public string Editora { get; set; } = string.Empty;
     public int Edicao { get; set; }
     public string AnoPublicacao { get; set; } = string.Empty;
-    public List<int> AutoresIds { get; set; } = new();
-    public List<int> AssuntosIds { get; set; } = new();
+    public List<int> Autores { get; set; } = new();
+    public List<int> Assuntos { get; set; } = new();
     public List<PrecoInput> Precos { get; set; } = new();
 }

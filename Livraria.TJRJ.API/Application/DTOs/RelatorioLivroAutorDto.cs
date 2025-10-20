@@ -1,5 +1,12 @@
 namespace Livraria.TJRJ.API.Application.DTOs;
 
+public class RelatorioLivroAutorAgrupadoDTO
+{
+    public int AutorId { get; set; }
+    public string AutorNome { get; set; } = string.Empty;
+    public List<RelatorioLivroAutorDto> Livros { get; set; } = new();
+}
+
 public class RelatorioLivroAutorDto
 {
     public int AutorId { get; set; }

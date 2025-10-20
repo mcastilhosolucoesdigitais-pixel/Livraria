@@ -96,8 +96,8 @@ export class LivroFormPage implements OnInit {
           editora: livro.editora,
           edicao: livro.edicao,
           anoPublicacao: livro.anoPublicacao,
-          autores: livro.autores.map(la => la.autor_CodAu),
-          assuntos: livro.assuntos.map(a => a.codAs),
+          autores: livro.autores.map(la => la.id),
+          assuntos: livro.assuntos.map(a => a.id),
           valor: preco ? preco.preco : 0,
           formaDeCompra: preco ? preco.formaDeCompra : FormaDeCompra.Balcao
         });
@@ -109,14 +109,14 @@ export class LivroFormPage implements OnInit {
     });
   }
 
-  onAutorChange(event: Event, codAu: number): void {
+  onAutorChange(event: Event, id: number): void {
     const checkbox = event.target as HTMLInputElement;
     const autoresSelecionados = this.livroForm.get('autores')?.value || [];
 
     if (checkbox.checked) {
-      autoresSelecionados.push(codAu);
+      autoresSelecionados.push(id);
     } else {
-      const index = autoresSelecionados.indexOf(codAu);
+      const index = autoresSelecionados.indexOf(id);
       if (index > -1) {
         autoresSelecionados.splice(index, 1);
       }
@@ -125,14 +125,14 @@ export class LivroFormPage implements OnInit {
     this.livroForm.patchValue({ autores: autoresSelecionados });
   }
 
-  onAssuntoChange(event: Event, codAs: number): void {
+  onAssuntoChange(event: Event, id: number): void {
     const checkbox = event.target as HTMLInputElement;
     const assuntosSelecionados = this.livroForm.get('assuntos')?.value || [];
 
     if (checkbox.checked) {
-      assuntosSelecionados.push(codAs);
+      assuntosSelecionados.push(id);
     } else {
-      const index = assuntosSelecionados.indexOf(codAs);
+      const index = assuntosSelecionados.indexOf(id);
       if (index > -1) {
         assuntosSelecionados.splice(index, 1);
       }
@@ -141,14 +141,14 @@ export class LivroFormPage implements OnInit {
     this.livroForm.patchValue({ assuntos: assuntosSelecionados });
   }
 
-  isAutorSelected(codAu: number): boolean {
+  isAutorSelected(id: number): boolean {
     const autoresSelecionados = this.livroForm.get('autores')?.value || [];
-    return autoresSelecionados.includes(codAu);
+    return autoresSelecionados.includes(id);
   }
 
-  isAssuntoSelected(codAs: number): boolean {
+  isAssuntoSelected(id: number): boolean {
     const assuntosSelecionados = this.livroForm.get('assuntos')?.value || [];
-    return assuntosSelecionados.includes(codAs);
+    return assuntosSelecionados.includes(id);
   }
 
   onSubmit(): void {
@@ -162,7 +162,7 @@ export class LivroFormPage implements OnInit {
 
     if (this.isEditMode && this.livroId) {
       const updateDto: ILivroUpdateDto = {
-        codl: this.livroId,
+        id: this.livroId,
         ...formValue
       };
 

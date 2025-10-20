@@ -34,9 +34,9 @@ public class CriarLivroCommandHandler : IRequestHandler<CriarLivroCommand, Resul
                 request.AnoPublicacao);
 
             // Adiciona autores
-            if (request.AutoresIds.Any())
+            if (request.Autores.Any())
             {
-                foreach (var autorId in request.AutoresIds)
+                foreach (var autorId in request.Autores)
                 {
                     var autor = await _autorRepository.GetByIdAsync(autorId, cancellationToken);
                     if (autor == null)
@@ -48,9 +48,9 @@ public class CriarLivroCommandHandler : IRequestHandler<CriarLivroCommand, Resul
             }
 
             // Adiciona assuntos
-            if (request.AssuntosIds.Any())
+            if (request.Assuntos.Any())
             {
-                foreach (var assuntoId in request.AssuntosIds)
+                foreach (var assuntoId in request.Assuntos)
                 {
                     var assunto = await _assuntoRepository.GetByIdAsync(assuntoId, cancellationToken);
                     if (assunto == null)

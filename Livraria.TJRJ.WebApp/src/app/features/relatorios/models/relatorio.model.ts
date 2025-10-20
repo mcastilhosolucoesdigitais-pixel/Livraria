@@ -1,20 +1,20 @@
 export interface IRelatorioLivrosPorAutor {
-  autorCodigo: number;
+  autorId: number;
   autorNome: string;
   livros: ILivroRelatorio[];
 }
 
 export interface ILivroRelatorio {
-  codigoLivro: number;
-  titulo: string;
-  editora: string;
-  edicao: number;
-  anoPublicacao: string;
+  autorId: number;
+  autorNome: string;
+  livroId: number;
+  livroTitulo: string;
+  livroEditora: string;
+  livroEdicao: number;
+  livroAnoPublicacao: string;
   assuntos: string[];
-  valores: IValorRelatorio[];
-}
-
-export interface IValorRelatorio {
-  formaDeCompra: string;
-  valor: number;
+  precoBalcao: number;
+  precoSelfService: number;
+  precoInternet: number;
+  precoEvento: number;
 }

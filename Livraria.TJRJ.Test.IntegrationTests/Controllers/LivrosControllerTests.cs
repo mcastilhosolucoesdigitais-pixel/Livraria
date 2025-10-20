@@ -20,8 +20,8 @@ public class LivrosControllerTests : BaseIntegrationTest
             Editora = "Addison-Wesley",
             Edicao = 2,
             AnoPublicacao = "2019",
-            AutoresIds = new[] { Autor1Id },
-            AssuntosIds = new[] { Assunto1Id },
+            Autores = new[] { Autor1Id },
+            Assuntos = new[] { Assunto1Id },
             ValorInicial = 99.90m,
             FormaDeCompraInicial = "Balcao"
         };
@@ -81,8 +81,8 @@ public class LivrosControllerTests : BaseIntegrationTest
             Editora = "Prentice Hall",
             Edicao = 2,
             AnoPublicacao = "2008",
-            AutoresIds = new[] { Autor1Id },
-            AssuntosIds = new[] { Assunto1Id },
+            Autores = new[] { Autor1Id },
+            Assuntos = new[] { Assunto1Id },
             ValorInicial = 99.90m,
             FormaDeCompraInicial = "Internet"
         };
@@ -105,8 +105,8 @@ public class LivrosControllerTests : BaseIntegrationTest
             Editora = "Prentice Hall",
             Edicao = 1,
             AnoPublicacao = "2008",
-            AutoresIds = new[] { Autor1Id },
-            AssuntosIds = new[] { Assunto1Id },
+            Autores = new[] { Autor1Id },
+            Assuntos = new[] { Assunto1Id },
             ValorInicial = 89.90m,
             FormaDeCompraInicial = "Balcao"
         };

@@ -1,5 +1,5 @@
 export interface IAutor {
-  codAu: number;
+  id: number;
   nome: string;
 }
 
@@ -8,6 +8,6 @@ export interface IAutorCreateDto {
 }
 
 export interface IAutorUpdateDto {
-  codAu: number;
+  id: number;
   nome: string;
 }

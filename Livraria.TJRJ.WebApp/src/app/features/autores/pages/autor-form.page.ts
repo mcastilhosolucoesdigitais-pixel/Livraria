@@ -70,7 +70,7 @@ export class AutorFormPage implements OnInit {
 
     if (this.isEditMode && this.autorId) {
       const updateDto: IAutorUpdateDto = {
-        codAu: this.autorId,
+        id: this.autorId,
         ...formValue
       };
 

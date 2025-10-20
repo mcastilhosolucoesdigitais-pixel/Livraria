@@ -38,9 +38,9 @@ export class AssuntosListPage implements OnInit {
     });
   }
 
-  deleteAssunto(codAs: number, descricao: string): void {
+  deleteAssunto(id: number, descricao: string): void {
     if (confirm(`Tem certeza que deseja excluir o assunto "${descricao}"?`)) {
-      this.assuntoService.deleteAssunto(codAs).subscribe({
+      this.assuntoService.deleteAssunto(id).subscribe({
         next: () => {
           this.notificationService.showSuccess('Assunto excluído com sucesso!');
           this.loadAssuntos();

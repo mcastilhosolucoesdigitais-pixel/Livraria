@@ -27,7 +27,7 @@
               {{ autor.autorNome }}
             </h4>
             <span class="badge bg-light text-dark">
-              {{ getTotalLivrosPorAutor(autor) }} livro(s)
+              {{ getTotalLivrosPorAutor(autor.autorId, autor.livros) }} livro(s)
             </span>
           </div>
         </div>
@@ -44,26 +44,28 @@
                   <th>Edição</th>
                   <th>Ano</th>
                   <th>Assuntos</th>
-                  <th>Valores</th>
+                  <th>Preço Balcão</th>
+                  <th>Preço SelfService</th>
+                  <th>Preço Internet</th>
+                  <th>Preço Evento</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let livro of autor.livros">
-                  <td>{{ livro.codigoLivro }}</td>
-                  <td><strong>{{ livro.titulo }}</strong></td>
-                  <td>{{ livro.editora }}</td>
-                  <td>{{ livro.edicao }}ª</td>
-                  <td>{{ livro.anoPublicacao }}</td>
+                  <td>{{ livro.livroId }}</td>
+                  <td><strong>{{ livro.livroTitulo }}</strong></td>
+                  <td>{{ livro.livroEditora }}</td>
+                  <td>{{ livro.livroEdicao }}ª</td>
+                  <td>{{ livro.livroAnoPublicacao }}</td>
                   <td>
                     <span *ngFor="let assunto of livro.assuntos; let last = last">
                       {{ assunto }}<span *ngIf="!last">, </span>
                     </span>
                   </td>
-                  <td>
-                    <div *ngFor="let valor of livro.valores" class="small">
-                      <strong>{{ valor.formaDeCompra }}:</strong> {{ valor.valor | currency:'BRL' }}
-                    </div>
-                  </td>
+                  <td>{{ livro.precoBalcao| currency:'BRL' }}</td>
+                  <td>{{ livro.precoSelfService| currency:'BRL' }}</td>
+                  <td>{{ livro.precoInternet| currency:'BRL' }}</td>
+                  <td>{{ livro.precoEvento| currency:'BRL' }}</td>
                 </tr>
               </tbody>
             </table>

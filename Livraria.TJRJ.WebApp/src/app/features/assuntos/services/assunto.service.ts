@@ -16,19 +16,19 @@ export class AssuntoService {
     return this.http.get<IAssunto[]>(this.apiUrl);
   }
 
-  getAssuntoById(codAs: number): Observable<IAssunto> {
-    return this.http.get<IAssunto>(`${this.apiUrl}/${codAs}`);
+  getAssuntoById(id: number): Observable<IAssunto> {
+    return this.http.get<IAssunto>(`${this.apiUrl}/${id}`);
   }
 
   createAssunto(assunto: IAssuntoCreateDto): Observable<IAssunto> {
     return this.http.post<IAssunto>(this.apiUrl, assunto);
   }
 
-  updateAssunto(codAs: number, assunto: IAssuntoUpdateDto): Observable<IAssunto> {
-    return this.http.put<IAssunto>(`${this.apiUrl}/${codAs}`, assunto);
+  updateAssunto(id: number, assunto: IAssuntoUpdateDto): Observable<IAssunto> {
+    return this.http.put<IAssunto>(`${this.apiUrl}/${id}`, assunto);
   }
 
-  deleteAssunto(codAs: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${codAs}`);
+  deleteAssunto(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

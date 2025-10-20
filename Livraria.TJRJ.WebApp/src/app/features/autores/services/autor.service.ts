@@ -16,19 +16,19 @@ export class AutorService {
     return this.http.get<IAutor[]>(this.apiUrl);
   }
 
-  getAutorById(codAu: number): Observable<IAutor> {
-    return this.http.get<IAutor>(`${this.apiUrl}/${codAu}`);
+  getAutorById(id: number): Observable<IAutor> {
+    return this.http.get<IAutor>(`${this.apiUrl}/${id}`);
   }
 
   createAutor(autor: IAutorCreateDto): Observable<IAutor> {
     return this.http.post<IAutor>(this.apiUrl, autor);
   }
 
-  updateAutor(codAu: number, autor: IAutorUpdateDto): Observable<IAutor> {
-    return this.http.put<IAutor>(`${this.apiUrl}/${codAu}`, autor);
+  updateAutor(id: number, autor: IAutorUpdateDto): Observable<IAutor> {
+    return this.http.put<IAutor>(`${this.apiUrl}/${id}`, autor);
   }
 
-  deleteAutor(codAu: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${codAu}`);
+  deleteAutor(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

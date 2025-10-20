@@ -27,18 +27,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let assunto of assuntos">
-          <td>{{ assunto.codAs }}</td>
+          <td>{{ assunto.id }}</td>
           <td>{{ assunto.descricao }}</td>
           <td class="text-center">
             <div class="btn-group" role="group">
               <a
-                [routerLink]="['/assuntos/editar', assunto.codAs]"
+                [routerLink]="['/assuntos/editar', assunto.id]"
                 class="btn btn-sm btn-outline-primary"
                 title="Editar">
                 <i class="bi bi-pencil"></i>
               </a>
               <button
-                (click)="deleteAssunto(assunto.codAs, assunto.descricao)"
+                (click)="deleteAssunto(assunto.id, assunto.descricao)"
                 class="btn btn-sm btn-outline-danger"
                 title="Excluir">
                 <i class="bi bi-trash"></i>

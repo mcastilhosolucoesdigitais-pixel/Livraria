@@ -21,7 +21,7 @@ public class RelatoriosController : ControllerBase
     /// </summary>
     /// <param name="autorId">ID do autor para filtrar (opcional)</param>
     [HttpGet("livros-por-autor")]
-    [ProducesResponseType(typeof(IEnumerable<RelatorioLivroAutorDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<RelatorioLivroAutorAgrupadoDTO>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetLivrosPorAutor([FromQuery] int? autorId = null)
     {
@@ -33,6 +33,16 @@ public class RelatoriosController : ControllerBase
             return BadRequest(new { errors = result.Errors.Any() ? result.Errors : new List<string> { result.Error ?? "Erro ao obter relatório" } });
         }
 
-        return Ok(result.Value);
+        var grouped = result.Value!
+            .GroupBy(r => new { r.AutorId, r.AutorNome })
+            .Select(g => new RelatorioLivroAutorAgrupadoDTO
+            {
+                AutorId = g.Key.AutorId,
+                AutorNome = g.Key.AutorNome,
+                Livros = g.Select(l => l).ToList()
+            })
+            .OrderBy(x=>x.AutorNome);
+
+        return Ok(grouped);
     }
 }
