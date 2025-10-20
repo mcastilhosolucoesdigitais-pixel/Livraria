@@ -26,12 +26,6 @@ public class AssuntosController : ControllerBase
     public async Task<IActionResult> Post([FromBody] CriarAssuntoCommand command)
     {
         var result = await _mediator.Send(command);
-
-        if (!result.IsSuccess)
-        {
-            return BadRequest(new { errors = result.Errors.Any() ? result.Errors : new List<string> { result.Error ?? "Erro ao criar assunto" } });
-        }
-
         return Created($"/api/assuntos/{result.Value}", result.Value);
     }
 
@@ -44,12 +38,6 @@ public class AssuntosController : ControllerBase
     {
         var query = new ObterTodosAssuntosQuery();
         var result = await _mediator.Send(query);
-
-        if (!result.IsSuccess)
-        {
-            return BadRequest(new { errors = result.Errors.Any() ? result.Errors : new List<string> { result.Error ?? "Erro ao obter assuntos" } });
-        }
-
         return Ok(result.Value);
     }
 
@@ -63,12 +51,6 @@ public class AssuntosController : ControllerBase
     {
         var query = new ObterAssuntoPorIdQuery { Id = id };
         var result = await _mediator.Send(query);
-
-        if (!result.IsSuccess)
-        {
-            return NotFound(new { error = result.Error ?? "Assunto não encontrado" });
-        }
-
         return Ok(result.Value);
     }
 
@@ -82,18 +64,7 @@ public class AssuntosController : ControllerBase
     public async Task<IActionResult> Put(int id, [FromBody] AtualizarAssuntoCommand command)
     {
         command.Id = id;
-        var result = await _mediator.Send(command);
-
-        if (!result.IsSuccess)
-        {
-            if (result.Error?.Contains("não encontrado") == true || result.Error?.Contains("não existe") == true)
-            {
-                return NotFound(new { error = result.Error });
-            }
-
-            return BadRequest(new { errors = result.Errors.Any() ? result.Errors : new List<string> { result.Error ?? "Erro ao atualizar assunto" } });
-        }
-
+        await _mediator.Send(command);
         return NoContent();
     }
 
@@ -106,13 +77,7 @@ public class AssuntosController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         var command = new DeletarAssuntoCommand { Id = id };
-        var result = await _mediator.Send(command);
-
-        if (!result.IsSuccess)
-        {
-            return NotFound(new { error = result.Error ?? "Assunto não encontrado" });
-        }
-
+        await _mediator.Send(command);
         return NoContent();
     }
 }

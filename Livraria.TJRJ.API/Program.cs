@@ -2,6 +2,7 @@ using FluentValidation;
 using Livraria.TJRJ.API.Domain.Interfaces;
 using Livraria.TJRJ.API.Infra.Data;
 using Livraria.TJRJ.API.Infra.Repositories;
+using Livraria.TJRJ.API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,7 +46,18 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Inicializa objetos do banco de dados (views, etc.)
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await context.EnsureViewsCreatedAsync();
+}
+
 // Configure the HTTP request pipeline.
+
+// Middleware de tratamento de erros global
+app.UseErrorHandling();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

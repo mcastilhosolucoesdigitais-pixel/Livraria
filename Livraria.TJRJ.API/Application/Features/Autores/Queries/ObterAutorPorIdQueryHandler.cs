@@ -1,5 +1,6 @@
 using Livraria.TJRJ.API.Application.Common;
 using Livraria.TJRJ.API.Application.DTOs;
+using Livraria.TJRJ.API.Domain.Exceptions;
 using Livraria.TJRJ.API.Domain.Interfaces;
 using MediatR;
 
@@ -16,26 +17,19 @@ public class ObterAutorPorIdQueryHandler : IRequestHandler<ObterAutorPorIdQuery,
 
     public async Task<Result<AutorDto>> Handle(ObterAutorPorIdQuery request, CancellationToken cancellationToken)
     {
-        try
+        var autor = await _autorRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (autor == null)
         {
-            var autor = await _autorRepository.GetByIdAsync(request.Id, cancellationToken);
-
-            if (autor == null)
-            {
-                return Result<AutorDto>.Failure("Autor não encontrado.");
-            }
-
-            var autorDto = new AutorDto
-            {
-                Id = autor.Id,
-                Nome = autor.Nome
-            };
-
-            return Result<AutorDto>.Success(autorDto);
+            throw new AutorNaoEncontradoException(request.Id);
         }
-        catch (Exception ex)
+
+        var autorDto = new AutorDto
         {
-            return Result<AutorDto>.Failure($"Erro ao buscar autor: {ex.Message}");
-        }
+            Id = autor.Id,
+            Nome = autor.Nome
+        };
+
+        return Result<AutorDto>.Success(autorDto);
     }
 }
