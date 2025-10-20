@@ -1,8 +1,8 @@
 export enum FormaDeCompra {
-  Balcao = 0,
-  SelfService = 1,
-  Internet = 2,
-  Evento = 3
+  Balcao = 1,
+  SelfService = 2,
+  Internet = 3,
+  Evento = 4
 }
 
 export const FormaDeCompraLabels: { [key in FormaDeCompra]: string } = {

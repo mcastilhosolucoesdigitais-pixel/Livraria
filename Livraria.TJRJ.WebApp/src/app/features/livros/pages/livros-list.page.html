@@ -42,7 +42,7 @@
           <td>{{ getAssuntosDescricoes(livro) }}</td>
           <td>
             <div *ngFor="let preco of livro.precos" class="small">
-              <strong>{{ preco.formaDeCompra }}:</strong> {{ preco.preco| currency:'BRL' }}
+              <strong>{{ preco.formaDeCompra }}:</strong> {{ preco.valor| currency:'BRL' }}
             </div>
           </td>
           <td class="text-center">

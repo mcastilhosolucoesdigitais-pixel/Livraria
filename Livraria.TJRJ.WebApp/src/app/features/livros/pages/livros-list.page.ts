@@ -61,11 +61,4 @@ export class LivrosListPage implements OnInit {
       .map(a => a.descricao)
       .join(', ');
   }
-
-  getPrecoMinimo(livro: ILivro): number {
-    if (!livro.precos || livro.precos.length === 0) {
-      return 0;
-    }
-    return Math.min(...livro.precos.map(p => p.preco));
-  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LivroService } from '../services';
 import { AutorService } from '../../autores/services';
@@ -9,7 +9,7 @@ import { NotificationService } from '../../../core/services';
 import { IAutor } from '../../autores/models';
 import { IAssunto } from '../../assuntos/models';
 import { FormaDeCompra, FormaDeCompraLabels } from '../../../shared/models';
-import { ILivroCreateDto, ILivroUpdateDto } from '../models';
+import { ILivroCreateDto, ILivroUpdateDto, IPrecoInput } from '../models';
 
 @Component({
   selector: 'app-livro-form',
@@ -64,9 +64,27 @@ export class LivroFormPage implements OnInit {
       anoPublicacao: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
       autores: [[], [Validators.required]],
       assuntos: [[], [Validators.required]],
-      valor: ['', [Validators.required, Validators.min(0.01)]],
-      formaDeCompra: [FormaDeCompra.Balcao, [Validators.required]]
+      precos: this.fb.array([], [Validators.required])
     });
+  }
+
+  get precos(): FormArray {
+    return this.livroForm.get('precos') as FormArray;
+  }
+
+  createPrecoFormGroup(valor: number = 0, formaDeCompra: FormaDeCompra = FormaDeCompra.Balcao): FormGroup {
+    return this.fb.group({
+      valor: [valor, [Validators.required, Validators.min(0.01)]],
+      formaDeCompra: [formaDeCompra, [Validators.required]]
+    });
+  }
+
+  addPreco(): void {
+    this.precos.push(this.createPrecoFormGroup());
+  }
+
+  removePreco(index: number): void {
+    this.precos.removeAt(index);
   }
 
   loadAutores(): void {
@@ -89,18 +107,25 @@ export class LivroFormPage implements OnInit {
     this.loading = true;
     this.livroService.getLivroById(id).subscribe({
       next: (livro) => {
-        const preco = livro.precos && livro.precos.length > 0 ? livro.precos[0] : null;
-
         this.livroForm.patchValue({
           titulo: livro.titulo,
           editora: livro.editora,
           edicao: livro.edicao,
           anoPublicacao: livro.anoPublicacao,
           autores: livro.autores.map(la => la.id),
-          assuntos: livro.assuntos.map(a => a.id),
-          valor: preco ? preco.preco : 0,
-          formaDeCompra: preco ? preco.formaDeCompra : FormaDeCompra.Balcao
+          assuntos: livro.assuntos.map(a => a.id)
         });
+
+        // Limpar preços existentes
+        this.precos.clear();
+
+        // Adicionar preços do livro
+        if (livro.precos && livro.precos.length > 0) {
+          livro.precos.forEach(preco => {
+            this.precos.push(this.createPrecoFormGroup(preco.valor, preco.formaDeCompra));
+          });
+        }
+
         this.loading = false;
       },
       error: () => {
@@ -160,10 +185,22 @@ export class LivroFormPage implements OnInit {
 
     const formValue = this.livroForm.value;
 
+    // Converter preços para o formato da API
+    const precos: IPrecoInput[] = formValue.precos.map((preco: any) => ({
+      valor: preco.valor,
+      formaDeCompra: FormaDeCompra[preco.formaDeCompra as keyof typeof FormaDeCompra]
+    }));
+
     if (this.isEditMode && this.livroId) {
       const updateDto: ILivroUpdateDto = {
         id: this.livroId,
-        ...formValue
+        titulo: formValue.titulo,
+        editora: formValue.editora,
+        edicao: formValue.edicao,
+        anoPublicacao: formValue.anoPublicacao,
+        autores: formValue.autores,
+        assuntos: formValue.assuntos,
+        precos: precos
       };
 
       this.livroService.updateLivro(this.livroId, updateDto).subscribe({
@@ -173,7 +210,15 @@ export class LivroFormPage implements OnInit {
         }
       });
     } else {
-      const createDto: ILivroCreateDto = formValue;
+      const createDto: ILivroCreateDto = {
+        titulo: formValue.titulo,
+        editora: formValue.editora,
+        edicao: formValue.edicao,
+        anoPublicacao: formValue.anoPublicacao,
+        autores: formValue.autores,
+        assuntos: formValue.assuntos,
+        precos: precos
+      };
 
       this.livroService.createLivro(createDto).subscribe({
         next: () => {
@@ -188,6 +233,16 @@ export class LivroFormPage implements OnInit {
     Object.keys(formGroup.controls).forEach(key => {
       const control = formGroup.get(key);
       control?.markAsTouched();
+
+      if (control instanceof FormArray) {
+        control.controls.forEach(arrayControl => {
+          if (arrayControl instanceof FormGroup) {
+            this.markFormGroupTouched(arrayControl);
+          } else {
+            arrayControl.markAsTouched();
+          }
+        });
+      }
     });
   }
 
