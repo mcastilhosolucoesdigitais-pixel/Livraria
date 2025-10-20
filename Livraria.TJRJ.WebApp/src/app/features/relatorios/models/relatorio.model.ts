@@ -12,7 +12,7 @@ export interface ILivroRelatorio {
   livroEditora: string;
   livroEdicao: number;
   livroAnoPublicacao: string;
-  assuntos: string[];
+  assuntos: string;
   precoBalcao: number;
   precoSelfService: number;
   precoInternet: number;

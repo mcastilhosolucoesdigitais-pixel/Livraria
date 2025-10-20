@@ -117,35 +117,59 @@
               </div>
             </div>
 
-            <div class="row">
-              <!-- Valor -->
-              <div class="col-md-6 mb-3">
-                <label for="valor" class="form-label">Valor (R$) *</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  [class.is-invalid]="isFieldInvalid('valor')"
-                  id="valor"
-                  formControlName="valor"
-                  step="0.01"
-                  min="0.01"
-                  placeholder="Ex: 49.90">
-                <div class="invalid-feedback">{{ getFieldError('valor') }}</div>
+            <!-- Preços -->
+            <div class="mb-3 precos-section">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label class="form-label mb-0">Preços *</label>
+                <button type="button" class="btn btn-sm btn-success" (click)="addPreco()">
+                  + Adicionar Preço
+                </button>
               </div>
 
-              <!-- Forma de Compra -->
-              <div class="col-md-6 mb-3">
-                <label for="formaDeCompra" class="form-label">Forma de Compra *</label>
-                <select
-                  class="form-select"
-                  [class.is-invalid]="isFieldInvalid('formaDeCompra')"
-                  id="formaDeCompra"
-                  formControlName="formaDeCompra">
-                  <option *ngFor="let forma of formasDeCompra" [value]="forma.value">
-                    {{ forma.label }}
-                  </option>
-                </select>
-                <div class="invalid-feedback">{{ getFieldError('formaDeCompra') }}</div>
+              <div class="border rounded p-3">
+                <div *ngIf="precos.length === 0" class="text-muted text-center py-3">
+                  Nenhum preço adicionado. Clique em "Adicionar Preço" para começar.
+                </div>
+
+                <div formArrayName="precos">
+                  <div *ngFor="let preco of precos.controls; let i = index" class="preco-item" [formGroupName]="i">
+                    <div class="row">
+                      <div class="col-md-5">
+                        <label [for]="'valor-' + i" class="form-label">Valor (R$)</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          [id]="'valor-' + i"
+                          formControlName="valor"
+                          step="0.01"
+                          min="0.01"
+                          placeholder="Ex: 49.90">
+                      </div>
+
+                      <div class="col-md-5">
+                        <label [for]="'formaDeCompra-' + i" class="form-label">Forma de Compra</label>
+                        <select
+                          class="form-select"
+                          [id]="'formaDeCompra-' + i"
+                          formControlName="formaDeCompra">
+                          <option *ngFor="let forma of formasDeCompra" [value]="forma.value">
+                            {{ forma.label }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger w-100" (click)="removePreco(i)">
+                          Remover
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <small class="text-danger" *ngIf="isFieldInvalid('precos')">
+                  {{ getFieldError('precos') }}
+                </small>
               </div>
             </div>
 

@@ -1,7 +1,9 @@
+using Dapper;
 using Livraria.TJRJ.API.Application.DTOs;
 using Livraria.TJRJ.API.Domain.Enums;
 using Livraria.TJRJ.API.Domain.Interfaces;
 using Livraria.TJRJ.API.Infra.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Livraria.TJRJ.API.Infra.Repositories;
@@ -19,42 +21,16 @@ public class RelatorioRepository : IRelatorioRepository
         int? autorId = null,
         CancellationToken cancellationToken = default)
     {
-        var query = _context.Livros
-            .Include(l => l.Autores)
-            .Include(l => l.Assuntos)
-            .AsQueryable();
-
+        string filtro = string.Empty;
         if (autorId.HasValue)
         {
-            query = query.Where(l => l.Autores.Any(a => a.Id == autorId.Value));
+            filtro = $"WHERE a.Id = {autorId}";
         }
-
-        var livros = await query.ToListAsync(cancellationToken);
-
-        var relatorio = new List<RelatorioLivroAutorDto>();
-
-        foreach (var livro in livros)
+        using (var conn = new SqlConnection(_context.Database.GetConnectionString()))
         {
-            foreach (var autor in livro.Autores)
-            {
-                relatorio.Add(new RelatorioLivroAutorDto
-                {
-                    AutorId = autor.Id,
-                    AutorNome = autor.Nome,
-                    LivroId = livro.Id,
-                    LivroTitulo = livro.Titulo,
-                    LivroEditora = livro.Editora,
-                    LivroEdicao = livro.Edicao,
-                    LivroAnoPublicacao = livro.AnoPublicacao,
-                    Assuntos = livro.Assuntos.Select(a => a.Descricao).ToList(),
-                    PrecoBalcao = livro.ObterPreco(FormaDeCompra.Balcao)?.Valor,
-                    PrecoSelfService = livro.ObterPreco(FormaDeCompra.SelfService)?.Valor,
-                    PrecoInternet = livro.ObterPreco(FormaDeCompra.Internet)?.Valor,
-                    PrecoEvento = livro.ObterPreco(FormaDeCompra.Evento)?.Valor
-                });
-            }
+            return await conn.QueryAsync<RelatorioLivroAutorDto>($"SELECT * FROM VIEW_LISTA_PRECOS {filtro}", cancellationToken);
         }
 
-        return relatorio.OrderBy(r => r.AutorNome).ThenBy(r => r.LivroTitulo);
     }
+
 }

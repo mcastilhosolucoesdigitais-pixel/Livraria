@@ -14,6 +14,11 @@ export interface ILivro {
   precos: ILivroPreco[];
 }
 
+export interface IPrecoInput {
+  valor: number;
+  formaDeCompra: string;
+}
+
 export interface ILivroCreateDto {
   titulo: string;
   editora: string;
@@ -21,8 +26,7 @@ export interface ILivroCreateDto {
   anoPublicacao: string;
   assuntos: number[];
   autores: number[];
-  valor: number;
-  formaDeCompra: FormaDeCompra;
+  precos: IPrecoInput[];
 }
 
 export interface ILivroUpdateDto {
@@ -33,6 +37,5 @@ export interface ILivroUpdateDto {
   anoPublicacao: string;
   assuntos: number[];
   autores: number[];
-  valor: number;
-  formaDeCompra: FormaDeCompra;
+  precos: IPrecoInput[];
 }

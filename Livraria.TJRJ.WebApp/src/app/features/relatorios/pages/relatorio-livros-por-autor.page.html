@@ -57,11 +57,7 @@
                   <td>{{ livro.livroEditora }}</td>
                   <td>{{ livro.livroEdicao }}ª</td>
                   <td>{{ livro.livroAnoPublicacao }}</td>
-                  <td>
-                    <span *ngFor="let assunto of livro.assuntos; let last = last">
-                      {{ assunto }}<span *ngIf="!last">, </span>
-                    </span>
-                  </td>
+                  <td>{{ livro.assuntos }}</td>
                   <td>{{ livro.precoBalcao| currency:'BRL' }}</td>
                   <td>{{ livro.precoSelfService| currency:'BRL' }}</td>
                   <td>{{ livro.precoInternet| currency:'BRL' }}</td>
