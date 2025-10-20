@@ -1,0 +1,73 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+    <h2>Relatório de Livros por Autor</h2>
+    <button (click)="print()" class="btn btn-primary">
+      <i class="bi bi-printer me-2"></i>Imprimir
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && relatorio.length === 0" class="alert alert-info">
+    Nenhum dado disponível para o relatório.
+  </div>
+
+  <div *ngIf="!loading && relatorio.length > 0" class="relatorio-content">
+    <div *ngFor="let autor of relatorio" class="autor-section mb-5">
+      <!-- Cabeçalho do Autor -->
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">
+              <i class="bi bi-person-fill me-2"></i>
+              {{ autor.autorNome }}
+            </h4>
+            <span class="badge bg-light text-dark">
+              {{ getTotalLivrosPorAutor(autor.autorId, autor.livros) }} livro(s)
+            </span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Tabela de Livros do Autor -->
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Título</th>
+                  <th>Editora</th>
+                  <th>Edição</th>
+                  <th>Ano</th>
+                  <th>Assuntos</th>
+                  <th>Preço Balcão</th>
+                  <th>Preço SelfService</th>
+                  <th>Preço Internet</th>
+                  <th>Preço Evento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let livro of autor.livros">
+                  <td>{{ livro.livroId }}</td>
+                  <td><strong>{{ livro.livroTitulo }}</strong></td>
+                  <td>{{ livro.livroEditora }}</td>
+                  <td>{{ livro.livroEdicao }}ª</td>
+                  <td>{{ livro.livroAnoPublicacao }}</td>
+                  <td>{{ livro.assuntos }}</td>
+                  <td>{{ livro.precoBalcao| currency:'BRL' }}</td>
+                  <td>{{ livro.precoSelfService| currency:'BRL' }}</td>
+                  <td>{{ livro.precoInternet| currency:'BRL' }}</td>
+                  <td>{{ livro.precoEvento| currency:'BRL' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

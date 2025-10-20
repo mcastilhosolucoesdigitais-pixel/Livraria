@@ -6,5 +6,5 @@ namespace Livraria.TJRJ.API.Application.Features.Assuntos.Queries;
 
 public class ObterAssuntoPorIdQuery : IRequest<Result<AssuntoDto>>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }

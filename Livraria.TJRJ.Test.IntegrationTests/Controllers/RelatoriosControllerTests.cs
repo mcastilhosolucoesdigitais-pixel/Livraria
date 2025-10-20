@@ -1,5 +1,6 @@
 using System.Net;
 using Livraria.TJRJ.Test.FuncionalTest.Infrastructure;
+using static Livraria.TJRJ.Test.FuncionalTest.Infrastructure.TestDataSeeder.TestIds;
 
 namespace Livraria.TJRJ.Test.FuncionalTest.Controllers;
 
@@ -37,7 +38,7 @@ public class RelatoriosControllerTests : BaseIntegrationTest
     public async Task Get_DeveRetornar200OK_QuandoBuscarRelatorioComFiltroDeAutor()
     {
         // Arrange
-        var autorId = Guid.NewGuid();
+        var autorId = Autor1Id; // Robert C. Martin
 
         // Act
         var response = await Client.GetAsync($"/api/relatorios/livros-por-autor?autorId={autorId}");

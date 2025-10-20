@@ -1,0 +1,105 @@
+.container {
+  animation: fadeIn 0.4s ease-out;
+}
+
+// Título da página
+h2 {
+  color: #212529;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &::before {
+    content: '';
+    width: 4px;
+    height: 2rem;
+    background: linear-gradient(180deg, #0d6efd, #0a58ca);
+    border-radius: 2px;
+  }
+}
+
+// Melhorias na tabela
+.table-responsive {
+  animation: fadeIn 0.5s ease-out;
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  tbody tr {
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: scale(1.001);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+// Estilo para colunas específicas
+td {
+  &:first-child {
+    font-weight: 600;
+    color: #0d6efd;
+  }
+
+  &:nth-child(2) {
+    font-weight: 500;
+  }
+}
+
+// Loading state
+.spinner-container {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Empty state
+.alert-info {
+  border-left: 4px solid #0dcaf0;
+  background-color: #cff4fc;
+  color: #055160;
+}
+
+// Botões de ação
+.btn-group {
+  .btn {
+    padding: 0.25rem 0.5rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px) scale(1.05);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.85rem;
+
+    th, td {
+      padding: 0.6rem 0.4rem;
+    }
+  }
+
+  .btn-group .btn {
+    padding: 0.25rem 0.5rem;
+  }
+}

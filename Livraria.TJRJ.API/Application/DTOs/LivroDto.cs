@@ -2,7 +2,7 @@ namespace Livraria.TJRJ.API.Application.DTOs;
 
 public class LivroDto
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Titulo { get; set; } = string.Empty;
     public string Editora { get; set; } = string.Empty;
     public int Edicao { get; set; }
@@ -14,7 +14,7 @@ public class LivroDto
 
 public class LivroSimplificadoDto
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Titulo { get; set; } = string.Empty;
     public string Editora { get; set; } = string.Empty;
     public int Edicao { get; set; }

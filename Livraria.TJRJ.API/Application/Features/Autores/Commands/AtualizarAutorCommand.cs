@@ -5,6 +5,6 @@ namespace Livraria.TJRJ.API.Application.Features.Autores.Commands;
 
 public class AtualizarAutorCommand : IRequest<Result>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Nome { get; set; } = string.Empty;
 }

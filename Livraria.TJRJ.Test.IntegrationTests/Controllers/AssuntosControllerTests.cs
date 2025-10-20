@@ -1,5 +1,8 @@
 using System.Net;
+using System.Net.Http.Json;
 using Livraria.TJRJ.Test.FuncionalTest.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using static Livraria.TJRJ.Test.FuncionalTest.Infrastructure.TestDataSeeder.TestIds;
 
 namespace Livraria.TJRJ.Test.FuncionalTest.Controllers;
 
@@ -15,7 +18,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
         // Arrange
         var assunto = new
         {
-            Descricao = "Programação"
+            Descricao = "Testes"
         };
 
         // Act
@@ -40,7 +43,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar200OK_QuandoAssuntoExistir()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = Assunto1Id; // Programação
 
         // Act
         var response = await Client.GetAsync($"/api/assuntos/{assuntoId}");
@@ -53,7 +56,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task GetById_DeveRetornar404NotFound_QuandoAssuntoNaoExistir()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = AssuntoInexistenteId;
 
         // Act
         var response = await Client.GetAsync($"/api/assuntos/{assuntoId}");
@@ -66,10 +69,10 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar204NoContent_QuandoAssuntoForAtualizadoComSucesso()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = Assunto2Id; // Arquitetura
         var assuntoAtualizado = new
         {
-            Descricao = "Engenharia de Software"
+            Descricao = "Arquitetura SW"
         };
 
         // Act
@@ -83,10 +86,10 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task Put_DeveRetornar404NotFound_QuandoAssuntoNaoExistir()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = AssuntoInexistenteId;
         var assuntoAtualizado = new
         {
-            Descricao = "Arquitetura de Software"
+            Descricao = "Assunto Inexistente"
         };
 
         // Act
@@ -100,10 +103,17 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar204NoContent_QuandoAssuntoForRemovidoComSucesso()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assunto = new
+        {
+            Descricao = "Testes Exclusao"
+        };
+
+        var responsePost = await Client.PostAsync("/api/assuntos", CreateJsonContent(assunto));
+        Assert.Equal(HttpStatusCode.Created, responsePost.StatusCode);
+        var createdResult = await responsePost.Content.ReadFromJsonAsync<int>();
 
         // Act
-        var response = await Client.DeleteAsync($"/api/assuntos/{assuntoId}");
+        var response = await Client.DeleteAsync($"/api/assuntos/{createdResult}");
 
         // Assert
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
@@ -113,7 +123,7 @@ public class AssuntosControllerTests : BaseIntegrationTest
     public async Task Delete_DeveRetornar404NotFound_QuandoAssuntoNaoExistir()
     {
         // Arrange
-        var assuntoId = Guid.NewGuid();
+        var assuntoId = AssuntoInexistenteId;
 
         // Act
         var response = await Client.DeleteAsync($"/api/assuntos/{assuntoId}");
